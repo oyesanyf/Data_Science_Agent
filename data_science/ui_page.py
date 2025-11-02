@@ -393,89 +393,29 @@ async def publish_ui_blocks(ctx: CallbackContext, tool_name: str, blocks: List[D
         try:
             from google.genai import types
             import asyncio
-            
-            async def _save_with_retry(filename: str, part: "types.Part", retries: int = 3, delay: float = 0.5):
-                """
-                Attempt to save an artifact with retries on failure.
-                
-                Per ADK Events documentation:
-                - save_artifact() returns a version number
-                - artifact_delta appears on the NEXT event after save_artifact()
-                - SessionService processes artifact_delta during append_event()
-                - We wait 500ms to allow SessionService to process before UI requests
-                """
-                last_err = None
-                for attempt in range(retries + 1):
-                    try:
-                        version = await ctx.save_artifact(filename, part)  # Capture version number
-                        logger.info(f"[UI SINK] Attempt {attempt+1}/{retries+1}: Successfully saved artifact '{filename}' (version={version})")
-                        # Track in state for verification (should appear in next event's artifact_delta)
-                        # ADK State object doesn't support setdefault or dict-style assignment - use setattr or skip tracking
-                        if hasattr(ctx, 'state'):
-                            try:
-                                saved_artifacts = ctx.state.get('__saved_artifacts__', [])
-                                if not isinstance(saved_artifacts, list):
-                                    saved_artifacts = []
-                                saved_artifacts.append({
-                                    'filename': filename,
-                                    'version': version,
-                                    'timestamp': datetime.now().isoformat(),
-                                    'source': 'ui_page'
-                                })
-                                # CRITICAL FIX: ADK State doesn't support dict-style assignment
-                                # Try setattr first, fall back to direct assignment if that works
-                                try:
-                                    setattr(ctx.state, '__saved_artifacts__', saved_artifacts)
-                                except (AttributeError, TypeError):
-                                    # If setattr doesn't work, try dict assignment (might work for some State implementations)
-                                    try:
-                                        ctx.state['__saved_artifacts__'] = saved_artifacts
-                                    except (AttributeError, TypeError):
-                                        # State object doesn't support assignment - that's OK, artifact was saved successfully
-                                        pass
-                            except Exception as state_err:
-                                # ADK State object might not support state tracking - that's OK, artifact save succeeded
-                                # Don't log as warning since artifact was saved successfully
-                                logger.debug(f"[UI SINK] Could not track artifact in state (non-critical): {state_err}")
-                        # CRITICAL: Longer delay after save to allow ADK SessionService to process artifact_delta
-                        # (per ADK Events docs: artifact_delta appears on NEXT event after save_artifact)
-                        if attempt == 0:  # Only delay on successful first attempt
-                            await asyncio.sleep(0.5)  # Allow time for SessionService.append_event to process
-                        return True
-                    except ValueError as ve:
-                        # ADK spec: ValueError raised when artifact_service not configured
-                        last_err = ve
-                        logger.error(f"[UI SINK] ArtifactService not configured: {ve}")
-                        logger.error(f"[UI SINK] Is ArtifactService configured in Runner?")
-                        # Don't retry - this is a configuration issue
-                        break
-                    except Exception as err:
-                        last_err = err
-                        # Only log as warning if it's not the State tracking error (which is non-critical)
-                        if "'State' object has no attribute 'setdefault'" not in str(err):
-                            logger.warning(f"[UI SINK] Attempt {attempt+1}/{retries+1}: Failed to save artifact '{filename}': {err}")
-                        if attempt < retries:
-                            await asyncio.sleep(delay * (attempt + 1)) # Exponential backoff
-                logger.error(f"[UI SINK] All {retries+1} attempts to save artifact '{filename}' failed.")
-                raise last_err
 
             page = ensure_ui_page(ctx)
-            # Include subdirectory in artifact name to preserve folder structure
             rel_for_artifact = _relpath_posix(page, execution_file)
-            
-            # Save the individual execution file (with folder prefix)
-            with open(execution_file, "rb") as f:
-                blob = types.Blob(data=f.read(), mime_type="text/markdown")
-            part = types.Part(inline_data=blob)
-            await _save_with_retry(rel_for_artifact, part)  # Keep the folder in the artifact name
-            logger.info(f"[UI SINK] [OK] Saved execution artifact: {rel_for_artifact}")
-            
-            # Save the index file (unchanged)
-            with open(page, "rb") as f:
-                blob = types.Blob(data=f.read(), mime_type="text/markdown")
-            part = types.Part(inline_data=blob)
-            await _save_with_retry(UI_FILENAME, part)
-            logger.info(f"[UI SINK] [OK] Saved index artifact: {UI_FILENAME}")
+
+            # Save the individual execution file
+            try:
+                with open(execution_file, "rb") as f:
+                    blob = types.Blob(data=f.read(), mime_type="text/markdown")
+                part = types.Part(inline_data=blob)
+                await ctx.save_artifact(rel_for_artifact, part)
+                logger.info(f"[UI SINK] [OK] Saved execution artifact: {rel_for_artifact}")
+            except Exception as e:
+                logger.error(f"[UI SINK] [FAILED] to save execution artifact '{rel_for_artifact}': {e}")
+
+            # Save the index file
+            try:
+                with open(page, "rb") as f:
+                    blob = types.Blob(data=f.read(), mime_type="text/markdown")
+                part = types.Part(inline_data=blob)
+                await ctx.save_artifact(UI_FILENAME, part)
+                logger.info(f"[UI SINK] [OK] Saved index artifact: {UI_FILENAME}")
+            except Exception as e:
+                logger.error(f"[UI SINK] [FAILED] to save index artifact '{UI_FILENAME}': {e}")
         except Exception as e:
             logger.warning(f"[UI SINK] Failed to save artifacts: {e}")
             

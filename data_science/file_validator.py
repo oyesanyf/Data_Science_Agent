@@ -62,7 +62,7 @@ def _find_file_in_common_locations(filename: str) -> Optional[str]:
                 logger.info(f"[FILE VALIDATOR] Found file in subdirectory: {full_path}")
                 return full_path
             # Limit recursion depth
-            if root.count(os.sep) - search_dir.count(os.sep) >= 2:
+            if str(root).count(os.sep) - str(search_dir).count(os.sep) >= 2:
                 del dirs[:]
     
     return None

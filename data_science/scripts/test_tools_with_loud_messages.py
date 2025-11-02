@@ -15,7 +15,7 @@ print("\n[TEST 1] shape()")
 print("-" * 80)
 try:
     from data_science.ds_tools import shape
-    result = shape(csv_path="tips.csv")
+    result = shape(csv_path="data_science/.uploaded_workspaces/tips.csv")
     
     print(f"Status: {result.get('status', 'N/A')}")
     print(f"Has __display__: {'__display__' in result}")
@@ -42,7 +42,7 @@ try:
         def __init__(self):
             self.state = {}
     
-    result = analyze_dataset_tool(csv_path="tips.csv", tool_context=MockContext())
+    result = analyze_dataset_tool(csv_path="data_science/.uploaded_workspaces/tips.csv", tool_context=MockContext())
     
     print(f"Status: {result.get('status', 'N/A')}")
     print(f"Has __display__: {'__display__' in result}")
@@ -79,7 +79,7 @@ print("-" * 80)
 try:
     from data_science.adk_safe_wrappers import stats_tool
     
-    result = stats_tool(csv_path="tips.csv", tool_context=MockContext())
+    result = stats_tool(csv_path="data_science/.uploaded_workspaces/tips.csv", tool_context=MockContext())
     
     print(f"Status: {result.get('status', 'N/A')}")
     print(f"Has __display__: {'__display__' in result}")

@@ -1043,6 +1043,9 @@ async def analyze_dataset(
     """
     # Enforce max limit of 5 rows for head preview
     sample_rows = min(sample_rows, 5)
+
+    if index_col == "":
+        index_col = None
     
     parse_dates = [datetime_col] if datetime_col else None
 
@@ -1203,22 +1206,25 @@ async def analyze_dataset(
     # Save profile JSON artifact if context is available
     artifacts: list[str] = []
     if tool_context is not None:
-        profile_json = json.dumps(
-            {
-                "overview": overview,
-                "numeric_summary": numeric_summary,
-                "categorical_summary": categorical_summary,
-            },
-            default=str,
-        ).encode("utf-8")
-        await tool_context.save_artifact(
-            filename="reports/profile.json",
-            artifact=types.Part.from_bytes(
-                data=profile_json,
-                mime_type="application/json",
-            ),
-        )
-        artifacts.append("reports/profile.json")
+        try:
+            profile_json = json.dumps(
+                {
+                    "overview": overview,
+                    "numeric_summary": numeric_summary,
+                    "categorical_summary": categorical_summary,
+                },
+                default=str,
+            ).encode("utf-8")
+            await tool_context.save_artifact(
+                filename="reports/profile.json",
+                artifact=types.Part.from_bytes(
+                    data=profile_json,
+                    mime_type="application/json",
+                ),
+            )
+            artifacts.append("reports/profile.json")
+        except Exception as e:
+            logger.error(f"Failed to save profile artifact: {e}")
 
     # Pairplot (numeric only, limited for speed)
     num_cols = df.select_dtypes(include=["number"]).columns.tolist()
@@ -1238,9 +1244,12 @@ async def analyze_dataset(
                 fig = g.fig
                 part = _fig_to_part(fig, "pairplot.png")
                 if tool_context is not None:
-                    # Save with folder structure prefix
-                    await tool_context.save_artifact("plots/pairplot.png", part)
-                    artifacts.append("plots/pairplot.png")
+                    try:
+                        # Save with folder structure prefix
+                        await tool_context.save_artifact("plots/pairplot.png", part)
+                        artifacts.append("plots/pairplot.png")
+                    except Exception as e:
+                        logger.error(f"Failed to save pairplot artifact: {e}")
         except (MemoryError, Exception) as e:
             logger.warning(f"[WARNING] Skipping pairplot due to error: {type(e).__name__}: {str(e)[:100]}")
 
@@ -1253,9 +1262,12 @@ async def analyze_dataset(
             plt.title("Correlation heatmap")
             part = _fig_to_part(plt.gcf(), "correlation_heatmap.png")
             if tool_context is not None:
-                # Save with folder structure prefix
-                await tool_context.save_artifact("plots/correlation_heatmap.png", part)
-                artifacts.append("plots/correlation_heatmap.png")
+                try:
+                    # Save with folder structure prefix
+                    await tool_context.save_artifact("plots/correlation_heatmap.png", part)
+                    artifacts.append("plots/correlation_heatmap.png")
+                except Exception as e:
+                    logger.error(f"Failed to save correlation heatmap artifact: {e}")
         except (MemoryError, Exception) as e:
             logger.warning(f"[WARNING] Skipping correlation heatmap due to error: {type(e).__name__}: {str(e)[:100]}")
 
@@ -1273,9 +1285,12 @@ async def analyze_dataset(
             plt.title(f"Distribution of {target}")
             part = _fig_to_part(plt.gcf(), f"target_{target}_hist.png")
             if tool_context is not None:
-                # Save with folder structure prefix
-                await tool_context.save_artifact(f"plots/target_{target}_hist.png", part)
-                artifacts.append(f"plots/target_{target}_hist.png")
+                try:
+                    # Save with folder structure prefix
+                    await tool_context.save_artifact(f"plots/target_{target}_hist.png", part)
+                    artifacts.append(f"plots/target_{target}_hist.png")
+                except Exception as e:
+                    logger.error(f"Failed to save target hist plot artifact: {e}")
         else:
             plt.figure(figsize=(8, 4))
             vc = df[target].value_counts(dropna=False).head(20)
@@ -1283,9 +1298,12 @@ async def analyze_dataset(
             plt.title(f"Counts of {target}")
             part = _fig_to_part(plt.gcf(), f"target_{target}_counts.png")
             if tool_context is not None:
-                # Save with folder structure prefix
-                await tool_context.save_artifact(f"plots/target_{target}_counts.png", part)
-                artifacts.append(f"plots/target_{target}_counts.png")
+                try:
+                    # Save with folder structure prefix
+                    await tool_context.save_artifact(f"plots/target_{target}_counts.png", part)
+                    artifacts.append(f"plots/target_{target}_counts.png")
+                except Exception as e:
+                    logger.error(f"Failed to save target counts plot artifact: {e}")
 
     result = {
         "overview": overview,
@@ -2474,10 +2492,13 @@ async def plot(
         import asyncio
         try:
             # [OK] FIX: Add 30-second timeout to prevent hanging indefinitely
-            await asyncio.wait_for(
+            results = await asyncio.wait_for(
                 asyncio.gather(*pending_artifact_saves, return_exceptions=True),
                 timeout=30.0
             )
+            for result in results:
+                if isinstance(result, Exception):
+                    logger.error(f"Failed to save artifact: {result}")
         except asyncio.TimeoutError:
             logger.warning(f"[WARNING] Artifact save timeout after 30s. {len(pending_artifact_saves)} artifacts may not be saved.")
         except Exception as e:

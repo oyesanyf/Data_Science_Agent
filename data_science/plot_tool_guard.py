@@ -7,18 +7,18 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 from typing import Any, Dict, List
-from . import artifact_manager
-from .large_data_config import UPLOAD_ROOT
+from data_science import artifact_manager
+from data_science.large_data_config import UPLOAD_ROOT
 # Import plot_tool from agent.py (working implementation)
 try:
-    from .agent import plot_tool as _plot_inner
+    from data_science.agent import plot_tool as _plot_inner
 except ImportError:
     # Fallback to adk_safe_wrappers if agent.py doesn't have it
-    from .adk_safe_wrappers import plot_tool as _plot_inner
-from .universal_async_sync_helper import async_sync_safe
+    from data_science.adk_safe_wrappers import plot_tool as _plot_inner
+from data_science.universal_async_sync_helper import async_sync_safe
 # Import intelligent retry from agent.py
 try:
-    from .agent import _intelligent_retry
+    from data_science.agent import _intelligent_retry
 except ImportError:
     # Fallback: simple retry function
     def _intelligent_retry(func, max_retries=3, base_delay=0.5, backoff_factor=2.0, retryable_exceptions=(Exception,)):

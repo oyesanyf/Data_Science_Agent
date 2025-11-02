@@ -3103,7 +3103,15 @@ def auto_sklearn_regress_tool(target: str, csv_path: str = "", **kwargs) -> Dict
 
 # ===== ANALYSIS & VISUALIZATION =====
 
-def analyze_dataset_tool(csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def analyze_dataset_tool(
+    csv_path: str = "",
+    target: str = "",
+    task: str = "",
+    datetime_col: str = "",
+    index_col: str = "",
+    sample_rows: int = 5,
+    **kwargs
+) -> Dict[str, Any]:
     """ADK-safe wrapper for analyze_dataset."""
     from .ds_tools import analyze_dataset
     import logging
@@ -3189,7 +3197,17 @@ def analyze_dataset_tool(csv_path: str = "", **kwargs) -> Dict[str, Any]:
             except Exception as e:
                 logger.warning(f"[analyze_dataset_tool] robust_read_table failed ({e}); proceeding with original path")
 
-        result = _run_async(analyze_dataset(csv_path=str(safe_path), sample_rows=5, tool_context=tool_context))
+        result = _run_async(
+            analyze_dataset(
+                csv_path=str(safe_path),
+                target=target,
+                task=task,
+                datetime_col=datetime_col,
+                index_col=index_col,
+                sample_rows=sample_rows,
+                tool_context=tool_context,
+            )
+        )
         csv_for_children = str(safe_path)
         logger.info(f"[analyze_dataset_tool] Primary path succeeded, result type: {type(result)}")
         
@@ -3222,9 +3240,18 @@ def analyze_dataset_tool(csv_path: str = "", **kwargs) -> Dict[str, Any]:
             logger.warning(f"[analyze_dataset_tool] Fallback CSV conversion failed: {e2}")
         
         try:
-            result = _run_async(analyze_dataset(csv_path=csv_for_children, sample_rows=5, tool_context=tool_context))
+            result = _run_async(
+                analyze_dataset(
+                    csv_path=csv_for_children,
+                    target=target,
+                    task=task,
+                    datetime_col=datetime_col,
+                    index_col=index_col,
+                    sample_rows=sample_rows,
+                    tool_context=tool_context,
+                )
+            )
             logger.info(f"[analyze_dataset_tool] Fallback path succeeded, result type: {type(result)}")
-            
             # DIAGNOSTIC: Log what analyze_dataset returned from fallback
             _log_tool_result_diagnostics(result, "analyze_dataset", stage="fallback_path_result")
         except Exception as e3:

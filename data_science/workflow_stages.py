@@ -220,7 +220,7 @@ def format_stage_menu(stage: dict) -> str:
     
     # Tip
     if stage.get('tip'):
-        lines.append(f"💡 TIP: {stage['tip']}")
+        lines.append(f"💡 **TIP:** {stage['tip']}")
         lines.append("")
     
     # Progress footer
@@ -263,6 +263,10 @@ def get_stage_for_tool(tool_name: str) -> int:
     if any(keyword in tool_name_lower for keyword in ['feature', 'pca', 'select', 'expand']):
         return 5
     
+    # Stage 14: Export PDF
+    if 'export_reports_for_latest_run_pathsafe' in tool_name_lower:
+        return 14
+
     # Stage 6: Statistical Analysis
     if any(keyword in tool_name_lower for keyword in ['hypothesis', 'test', 'statistical']):
         return 6
