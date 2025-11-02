@@ -245,7 +245,8 @@ async def auto_clean_data(
         return {"error": "AutoGluon not installed. Run: pip install autogluon.tabular"}
     
     # Load data
-    df = pd.read_csv(csv_path)
+    from .ds_tools import _load_dataframe
+    df = await _load_dataframe(csv_path, tool_context=tool_context)
     initial_shape = df.shape
     
     # Clean
@@ -260,7 +261,8 @@ async def auto_clean_data(
         # Build output path with timestamp + original name + _cleaned
         timestamp = int(time.time())
         output_filename = f"{timestamp}_{clean_name}_cleaned.csv"
-        output_path = str(Path(csv_path).parent / output_filename)
+        reports_dir = _get_workspace_dir(tool_context, "reports")
+        output_path = str(Path(reports_dir) / output_filename)
     
     df_clean.to_csv(output_path, index=False)
     
@@ -628,7 +630,8 @@ async def autogluon_timeseries(
     
     try:
         # Load full time series data
-        full_df = pd.read_csv(csv_path)
+        from .ds_tools import _load_dataframe
+        full_df = await _load_dataframe(csv_path, tool_context=tool_context)
         full_data = TimeSeriesDataFrame.from_data_frame(
             full_df,
             id_column=item_id_col,
@@ -658,7 +661,8 @@ async def autogluon_timeseries(
             )
             
             # Save test set to temporary file for consistency
-            test_temp_path = csv_path.replace('.csv', '_test_temporal.csv')
+            reports_dir = _get_workspace_dir(tool_context, "reports")
+            test_temp_path = str(Path(reports_dir) / csv_path.replace('.csv', '_test_temporal.csv'))
             test_df.to_csv(test_temp_path, index=False)
             test_csv_path = test_temp_path
             auto_split = True
@@ -811,7 +815,8 @@ async def autogluon_multimodal(
     
     try:
         # Load data
-        train_data = pd.read_csv(csv_path)
+        from .ds_tools import _load_dataframe
+        train_data = await _load_dataframe(csv_path, tool_context=tool_context)
         
         # Set output directory (organized by dataset)
         if output_dir is None:
@@ -844,7 +849,7 @@ async def autogluon_multimodal(
         
         # Evaluate on test set if provided
         if test_csv_path:
-            test_data = pd.read_csv(test_csv_path)
+            test_data = await _load_dataframe(test_csv_path, tool_context=tool_context)
             
             if label in test_data.columns:
                 # Evaluate

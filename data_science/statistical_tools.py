@@ -8,12 +8,15 @@ from typing import Dict, Any, Optional, List, Union
 from scipy import stats
 from scipy.stats import f_oneway, chi2_contingency, ttest_ind, ttest_rel, mannwhitneyu, kruskal
 import warnings
-from .ds_tools import ensure_display_fields
+from .ds_tools import ensure_display_fields, _load_dataframe, _get_workspace_dir
+import json
+from pathlib import Path
+from google.genai import types
 
 logger = logging.getLogger(__name__)
 
 @ensure_display_fields
-def anova(
+async def anova(
     target: str,
     categorical_vars: str = "",
     csv_path: str = "",
@@ -35,17 +38,7 @@ def anova(
     """
     try:
         # Load data
-        if not csv_path and tool_context:
-            csv_path = tool_context.state.get("default_csv_path", "")
-        
-        if not csv_path:
-            return {
-                "status": "failed",
-                "error": "No CSV file specified",
-                "message": "Please provide csv_path or upload a CSV file first"
-            }
-        
-        df = pd.read_csv(csv_path)
+        df = await _load_dataframe(csv_path, tool_context=tool_context)
         
         # Parse parameters
         alpha_float = float(alpha)
@@ -146,6 +139,31 @@ def anova(
         # Summary
         significant_vars = [var for var, result in anova_results.items() 
                           if result.get("status") == "success" and result.get("is_significant")]
+
+        # Save to artifact
+        if tool_context:
+            try:
+                reports_dir = _get_workspace_dir(tool_context, "reports")
+                report_path = Path(reports_dir) / "anova_results.md"
+
+                markdown_content = f"# ANOVA Results for {target}\n\n"
+                for var, result in anova_results.items():
+                    markdown_content += f"## Analysis for {var}\n"
+                    if result['status'] == 'success':
+                        markdown_content += f"- **Interpretation**: {result['interpretation']}\n"
+                        markdown_content += f"- **P-value**: {result['p_value']:.4f}\n"
+                        markdown_content += f"- **Effect Size (eta-squared)**: {result['eta_squared']:.4f} ({result['effect_size']})\n"
+                    else:
+                        markdown_content += f"- **Error**: {result['error']}\n"
+
+                with open(report_path, "w") as f:
+                    f.write(markdown_content)
+
+                with open(report_path, "rb") as f:
+                    await tool_context.save_artifact("anova_results.md", types.Part.from_bytes(f.read(), "text/markdown"))
+            except Exception as e:
+                logger.warning(f"Failed to save ANOVA artifact: {e}")
+
         
         return {
             "status": "success",
@@ -171,7 +189,7 @@ def anova(
         }
 
 @ensure_display_fields
-def inference(
+async def inference(
     test_type: str = "t_test",
     variable1: str = "",
     variable2: str = "",
@@ -197,17 +215,7 @@ def inference(
     """
     try:
         # Load data
-        if not csv_path and tool_context:
-            csv_path = tool_context.state.get("default_csv_path", "")
-        
-        if not csv_path:
-            return {
-                "status": "failed",
-                "error": "No CSV file specified",
-                "message": "Please provide csv_path or upload a CSV file first"
-            }
-        
-        df = pd.read_csv(csv_path)
+        df = await _load_dataframe(csv_path, tool_context=tool_context)
         alpha_float = float(alpha)
         
         # Validate variables
@@ -411,6 +419,28 @@ def inference(
         
         # Add interpretation
         result["interpretation"] = f"{result['test_name']}: {'Significant' if result['is_significant'] else 'Not significant'} (p = {result['p_value']:.3f}, α = {alpha_float})"
+
+        # Save to artifact
+        if tool_context:
+            try:
+                reports_dir = _get_workspace_dir(tool_context, "reports")
+                report_path = Path(reports_dir) / "inference_results.md"
+
+                markdown_content = f"# Inference Test Results: {test_type}\n\n"
+                markdown_content += f"## {result['test_name']}\n"
+                markdown_content += f"- **Interpretation**: {result['interpretation']}\n"
+                markdown_content += f"- **P-value**: {result['p_value']:.4f}\n"
+                if 'effect_size' in result:
+                    markdown_content += f"- **Effect Size**: {result['effect_size']}\n"
+
+                with open(report_path, "w") as f:
+                    f.write(markdown_content)
+
+                with open(report_path, "rb") as f:
+                    await tool_context.save_artifact("inference_results.md", types.Part.from_bytes(f.read(), "text/markdown"))
+            except Exception as e:
+                logger.warning(f"Failed to save inference artifact: {e}")
+
         
         return {
             "status": "success",
