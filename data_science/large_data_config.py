@@ -57,9 +57,9 @@ if UPLOAD_ROOT.name != ".uploaded":
 # Log final UPLOAD_ROOT for verification (at module load time)
 logger.info(f"[CONFIG] UPLOAD_ROOT set to: {UPLOAD_ROOT} (must end with .uploaded)")
 
-# Workspace root (defaults to {UPLOAD_ROOT}/_workspaces)
+# Workspace root (defaults to {UPLOAD_ROOT}/.uploaded_workspaces)
 WORKSPACES_ROOT = Path(os.path.expanduser(
-    os.getenv("AGENT_WORKSPACES_DIR", str(UPLOAD_ROOT / "_workspaces"))
+    os.getenv("AGENT_WORKSPACES_DIR", str(UPLOAD_ROOT / ".uploaded_workspaces"))
 )).resolve()
 
 # Models directory (defaults to {WORKSPACES_ROOT}/models or custom path)

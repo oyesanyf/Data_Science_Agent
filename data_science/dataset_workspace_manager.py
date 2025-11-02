@@ -237,45 +237,41 @@ def create_workspace_structure(dataset_name: str,
                                 base_root: str = None,
                                 subdirs: Dict[str, Dict] = None) -> Tuple[Path, Dict[str, str]]:
     """
-    Create a comprehensive workspace directory structure for a dataset.
+    Create a comprehensive, timestamped workspace directory structure for a dataset.
     
     Structure created:
-        {base_root}/{dataset_name}/
-          ├─ data/          # Processed datasets
-          ├─ models/        # Trained models
-          ├─ plots/         # Visualizations
-          ├─ reports/       # Analysis reports
-          ├─ metrics/       # Evaluation metrics
-          ├─ feature_sets/  # Engineered features
-          ├─ embeddings/   # Vector embeddings
-          ├─ logs/         # Execution logs
-          ├─ cache/        # Cache files
-          ├─ notebooks/    # Jupyter notebooks
-          ├─ config/       # Configuration files
-          ├─ backups/      # Backup files
-          └─ manifest.json # Workspace metadata
+        {base_root}/{dataset_name}/{timestamp}/
+          ├─ data/
+          ├─ models/
+          ...
+          └─ manifest.json
     
     Args:
         dataset_name: Name of the dataset (will be sanitized)
-        base_root: Base root directory (default: uploads/_workspaces)
+        base_root: Base root directory (default from large_data_config.WORKSPACES_ROOT)
         subdirs: Custom subdirectories to create (optional)
         
     Returns:
         Tuple of (workspace_path, subdirectory_paths_dict)
     """
-    # Determine base root
+    # Determine base root from centralized config
     if not base_root:
         try:
-            from .large_data_config import UPLOAD_ROOT
-            base_root = os.path.join(UPLOAD_ROOT, "_workspaces")
-        except Exception:
-            base_root = "uploads/_workspaces"
-    
+            from .large_data_config import WORKSPACES_ROOT
+            base_root = str(WORKSPACES_ROOT)
+        except ImportError:
+            logger.warning("Could not import WORKSPACES_ROOT, using fallback.")
+            # Fallback path consistent with large_data_config.py
+            base_root = str(Path("data_science") / ".uploaded" / ".uploaded_workspaces")
+
     # Sanitize dataset name
     safe_name = _sanitize_dataset_name(dataset_name)
     
-    # Create workspace root
-    workspace_root = Path(base_root) / safe_name
+    # Generate a timestamp for the new workspace subdirectory
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    # Create workspace root: {base_root}/{safe_name}/{timestamp}
+    workspace_root = Path(base_root) / safe_name / timestamp
     workspace_root.mkdir(parents=True, exist_ok=True)
     
     # Use provided subdirs or standard ones
@@ -292,17 +288,18 @@ def create_workspace_structure(dataset_name: str,
     manifest = {
         "dataset_name": dataset_name,
         "safe_name": safe_name,
+        "timestamp": timestamp,
         "created_at": datetime.now().isoformat(),
         "workspace_root": str(workspace_root),
         "subdirectories": subdirectory_paths,
-        "structure_version": "1.0"
+        "structure_version": "1.1"  # Incremented version
     }
     
     manifest_path = workspace_root / "manifest.json"
     with open(manifest_path, 'w', encoding='utf-8') as f:
         json.dump(manifest, f, indent=2)
     
-    logger.info(f"Created workspace structure: {workspace_root}")
+    logger.info(f"Created timestamped workspace structure: {workspace_root}")
     logger.info(f"Subdirectories: {', '.join(subdirs_to_create.keys())}")
     
     return workspace_root, subdirectory_paths
@@ -405,25 +402,51 @@ def save_to_workspace(file_path: str,
 
 def load_workspace_info(dataset_name: str, base_root: str = None) -> Dict[str, Any]:
     """
-    Load workspace information from manifest.
+    Load workspace information from the most recent timestamped manifest.
     
     Args:
         dataset_name: Name of the dataset
         base_root: Base root directory
         
     Returns:
-        Workspace manifest information
+        Workspace manifest information from the latest workspace, or {} if none found.
     """
+    # Determine base root from centralized config
     if not base_root:
         try:
-            from .large_data_config import UPLOAD_ROOT
-            base_root = os.path.join(UPLOAD_ROOT, "_workspaces")
-        except Exception:
-            base_root = "uploads/_workspaces"
-    
+            from .large_data_config import WORKSPACES_ROOT
+            base_root = str(WORKSPACES_ROOT)
+        except ImportError:
+            logger.warning("Could not import WORKSPACES_ROOT, using fallback.")
+            base_root = str(Path("data_science") / ".uploaded" / ".uploaded_workspaces")
+
     safe_name = _sanitize_dataset_name(dataset_name)
-    workspace_root = Path(base_root) / safe_name
-    manifest_path = workspace_root / "manifest.json"
+    dataset_root = Path(base_root) / safe_name
+
+    if not dataset_root.is_dir():
+        return {}
+
+    # Find the most recent timestamped subdirectory
+    latest_workspace_dir = None
+    latest_timestamp = ""
+
+    for subdir in dataset_root.iterdir():
+        # Check if it's a directory and its name matches the timestamp format
+        if subdir.is_dir() and re.match(r"\d{8}_\d{6}", subdir.name):
+            if subdir.name > latest_timestamp:
+                latest_timestamp = subdir.name
+                latest_workspace_dir = subdir
+
+    if not latest_workspace_dir:
+        # Check for legacy, non-timestamped workspace with a manifest
+        legacy_manifest_path = dataset_root / "manifest.json"
+        if legacy_manifest_path.exists():
+            logger.info(f"Found legacy workspace manifest: {legacy_manifest_path}")
+            with open(legacy_manifest_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return {}
+
+    manifest_path = latest_workspace_dir / "manifest.json"
     
     if manifest_path.exists():
         with open(manifest_path, 'r', encoding='utf-8') as f:
