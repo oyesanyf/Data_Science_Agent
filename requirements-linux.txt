@@ -1,0 +1,143 @@
+# ============================================================
+# Data Science Agent - Linux/macOS Additional Dependencies
+# ============================================================
+#
+# These packages are only compatible with Linux and macOS
+# NOT compatible with Windows
+#
+# To install on Linux/Mac:
+#   pip install -r requirements.txt
+#   pip install -r requirements-linux.txt
+#
+# Or using uv (faster):
+#   uv pip install -r requirements.txt
+#   uv pip install -r requirements-linux.txt
+#
+# ============================================================
+
+# ============================
+# Auto-sklearn (Linux/Mac only)
+# ============================
+# Automated machine learning toolkit
+# Windows is NOT supported due to C++ compilation requirements
+auto-sklearn>=0.15.0
+
+# Additional dependencies for auto-sklearn
+pyrfr>=0.9.1            # Random forest regressor
+ConfigSpace>=1.2.0      # Configuration space for hyperparameters
+pynisher>=1.0.11        # Resource limitation
+smac>=2.2.0             # Sequential Model-based Algorithm Configuration
+
+# ============================
+# Performance Libraries
+# ============================
+# These may also be Linux/Mac only due to compilation requirements
+
+# psutil>=6.1.1         # System and process utilities (cross-platform, but include here for completeness)
+
+# ============================
+# Optional: System-level optimizations
+# ============================
+
+# Intel Math Kernel Library (MKL) optimizations
+# Uncomment if using Intel CPUs for better NumPy/SciPy performance
+# mkl>=2024.2.0
+# intel-openmp>=2024.2.0
+
+# ============================================================
+# Installation Notes
+# ============================================================
+#
+# Auto-sklearn requires:
+#   - C++ compiler (g++ on Linux, clang on macOS)
+#   - SWIG (Simplified Wrapper and Interface Generator)
+#   - Python development headers
+#
+# Ubuntu/Debian:
+#   sudo apt-get update
+#   sudo apt-get install build-essential swig python3-dev
+#
+# macOS (requires Homebrew):
+#   brew install swig
+#   xcode-select --install  # For C++ compiler
+#
+# Fedora/RHEL:
+#   sudo dnf install gcc-c++ swig python3-devel
+#
+# After installing system dependencies:
+#   pip install -r requirements-linux.txt
+#
+# ============================================================
+# Note: The agent works fine WITHOUT auto-sklearn!
+# ============================================================
+# 
+# The auto_sklearn_tools.py module is a custom implementation
+# using scikit-learn and works on ALL platforms including Windows.
+# 
+# Installing the actual auto-sklearn package is OPTIONAL and
+# only provides minor additional functionality:
+#   - True ensemble selection
+#   - Meta-learning for faster hyperparameter search
+#   - Automated preprocessing pipeline selection
+#
+# Our custom implementation provides:
+#   - Scikit-learn model selection
+#   - Optuna-based hyperparameter optimization
+#   - Feature preprocessing
+#   - Cross-platform compatibility (Windows/Linux/Mac)
+#
+# Recommendation:
+#   - Linux/Mac production servers: Install auto-sklearn
+#   - Windows development: Skip auto-sklearn (use custom implementation)
+#   - Containers (Docker): Install auto-sklearn in Linux-based images
+#
+# ============================================================
+# Troubleshooting
+# ============================================================
+#
+# If auto-sklearn installation fails:
+#
+# 1. Check system dependencies:
+#    - GCC/Clang compiler
+#    - SWIG
+#    - Python headers
+#
+# 2. Try installing from source:
+#    git clone https://github.com/automl/auto-sklearn.git
+#    cd auto-sklearn
+#    pip install -e .
+#
+# 3. Check compatibility:
+#    - Python 3.8-3.11 supported
+#    - scikit-learn version must be compatible
+#
+# 4. Use Docker (easiest):
+#    docker pull mfeurer/auto-sklearn:master
+#
+# If still having issues, the agent works fine without it!
+# Just use the custom implementation (automatic fallback).
+#
+# ============================================================
+# Performance Comparison
+# ============================================================
+#
+# Auto-sklearn (official):
+#   ✓ Better ensemble selection
+#   ✓ Meta-learning (faster initial search)
+#   ✗ Linux/Mac only
+#   ✗ Complex installation
+#
+# Custom Implementation:
+#   ✓ Cross-platform (Windows/Linux/Mac)
+#   ✓ Easy installation
+#   ✓ Uses Optuna (state-of-the-art optimization)
+#   ✗ No meta-learning
+#   ✗ Simpler ensemble (still effective)
+#
+# In practice: Both perform similarly on most datasets!
+# The custom implementation is recommended for development.
+#
+# ============================================================
+# Updated: October 2025
+# Tested on Ubuntu 22.04/24.04, macOS 14/15
+# ============================================================

@@ -1,0 +1,65 @@
+#!/bin/bash
+# Script to add @ensure_display_fields decorator to all major tools
+
+# List of critical tools that need the decorator
+TOOLS=(
+    "describe_combo"
+    "train_baseline_model"
+    "auto_analyze_and_model"
+    "suggest_next_steps"
+    "list_data_files"
+    "plot"
+    "predict"
+    "classify"
+    "train"
+    "train_classifier"
+    "train_regressor"
+    "train_decision_tree"
+    "recommend_model"
+    "train_knn"
+    "train_naive_bayes"
+    "train_svm"
+    "apply_pca"
+    "load_model"
+    "kmeans_cluster"
+    "dbscan_cluster"
+    "hierarchical_cluster"
+    "isolation_forest_train"
+    "smart_cluster"
+    "scale_data"
+    "encode_data"
+    "expand_features"
+    "impute_simple"
+    "impute_knn"
+    "impute_iterative"
+    "select_features"
+    "recursive_select"
+    "sequential_select"
+    "split_data"
+    "grid_search"
+    "evaluate"
+    "text_to_features"
+    "anomaly"
+    "accuracy"
+    "load_existing_models"
+    "ensemble"
+    "clean"
+    "explain_model"
+    "export_executive_report"
+    "export"
+    "save_uploaded_file"
+    "execute_next_step"
+    "maintenance"
+)
+
+echo "Adding @ensure_display_fields decorator to all major tools..."
+echo "Total tools to update: ${#TOOLS[@]}"
+
+for tool in "${TOOLS[@]}"; do
+    echo "  • $tool()"
+done
+
+echo ""
+echo "[INFO] Manual application required in ds_tools.py"
+echo "[INFO] Add @ensure_display_fields before each async def or def"
+

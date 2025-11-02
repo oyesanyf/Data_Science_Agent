@@ -1,0 +1,12 @@
+# Directories to ignore for ADK agent auto-discovery
+data_science/autogluon_models/
+data_science/models/
+data_science/.uploaded/
+data_science/.plot/
+data_science/.export/
+uploads/
+.cursor/
+__pycache__/
+*.pyc
+.venv/
+
