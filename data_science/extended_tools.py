@@ -227,7 +227,7 @@ async def fairness_report(
     # Auto-install fairlearn if needed
     try:
         from .auto_install_utils import ensure_tool_dependencies
-        success, error_msg = ensure_tool_dependencies('fairness_report', silent=False)
+        success, error_msg = await ensure_tool_dependencies('fairness_report', silent=False)
         if not success:
             return {
                 "status": "error",
@@ -307,8 +307,8 @@ async def fairness_report(
         }
     
     # Save report
-    export_dir = os.path.join(os.path.dirname(__file__), '.export')
-    os.makedirs(export_dir, exist_ok=True)
+    from .ds_tools import _get_workspace_dir
+    export_dir = _get_workspace_dir(tool_context, "reports")
     report_path = os.path.join(export_dir, "fairness_report.json")
     
     with open(report_path, 'w') as f:
@@ -449,6 +449,13 @@ async def fairness_mitigation_grid(
     
     fairness_improvement = comparison["baseline"]["demographic_parity_diff"] - comparison["mitigated"]["demographic_parity_diff"]
     
+    # Save report
+    from .ds_tools import _get_workspace_dir
+    reports_dir = _get_workspace_dir(tool_context, "reports")
+    report_path = os.path.join(reports_dir, "fairness_mitigation_report.json")
+    with open(report_path, 'w') as f:
+        json.dump(comparison, f, indent=2)
+
     return _json_safe({
         "status": "success",
         "mitigation_method": mitigation_method,
@@ -500,7 +507,7 @@ async def drift_profile(
     # Auto-install evidently if needed
     try:
         from .auto_install_utils import ensure_tool_dependencies
-        success, error_msg = ensure_tool_dependencies('drift_profile', silent=False)
+        success, error_msg = await ensure_tool_dependencies('drift_profile', silent=False)
         if not success:
             return {
                 "status": "error",
@@ -520,10 +527,10 @@ async def drift_profile(
             "__display__": "❌ Cannot use drift_profile() - evidently not available.\n\n**Manual Installation:**\n```bash\npip install evidently\n```"
         }
     
-    reference_df = pd.read_csv(reference_csv)
+    reference_df = await _load_dataframe(reference_csv, tool_context=tool_context)
     
     if current_csv:
-        current_df = pd.read_csv(current_csv)
+        current_df = await _load_dataframe(current_csv, tool_context=tool_context)
     else:
         # Split reference into two halves for demo
         split_idx = len(reference_df) // 2
@@ -535,8 +542,8 @@ async def drift_profile(
     report.run(reference_data=reference_df, current_data=current_df)
     
     # Save HTML report
-    export_dir = os.path.join(os.path.dirname(__file__), '.export')
-    os.makedirs(export_dir, exist_ok=True)
+    from .ds_tools import _get_workspace_dir
+    export_dir = _get_workspace_dir(tool_context, "reports")
     report_path = os.path.join(export_dir, "drift_report.html")
     report.save_html(report_path)
     
@@ -608,8 +615,8 @@ async def data_quality_report(
     report = Report(metrics=[DataQualityPreset()])
     report.run(reference_data=None, current_data=df)
     
-    export_dir = os.path.join(os.path.dirname(__file__), '.export')
-    os.makedirs(export_dir, exist_ok=True)
+    from .ds_tools import _get_workspace_dir
+    export_dir = _get_workspace_dir(tool_context, "reports")
     report_path = os.path.join(export_dir, "data_quality_report.html")
     report.save_html(report_path)
     
@@ -680,7 +687,7 @@ async def causal_identify(
     # Auto-install dowhy if needed
     try:
         from .auto_install_utils import ensure_tool_dependencies
-        success, error_msg = ensure_tool_dependencies('causal_identify', silent=False)
+        success, error_msg = await ensure_tool_dependencies('causal_identify', silent=False)
         if not success:
             return {
                 "status": "error",
@@ -723,8 +730,8 @@ async def causal_identify(
     identified_estimand = model.identify_effect(proceed_when_unidentifiable=True)
     
     # Save graph
-    plot_dir = os.path.join(os.path.dirname(__file__), '.plot')
-    os.makedirs(plot_dir, exist_ok=True)
+    from .ds_tools import _get_workspace_dir
+    plot_dir = _get_workspace_dir(tool_context, "plots")
     graph_path = os.path.join(plot_dir, "causal_graph.png")
     
     try:
@@ -812,6 +819,18 @@ async def causal_estimate(
         method_name="random_common_cause"
     )
     
+    # Save report
+    from .ds_tools import _get_workspace_dir
+    reports_dir = _get_workspace_dir(tool_context, "reports")
+    report_path = os.path.join(reports_dir, "causal_estimate_report.json")
+    with open(report_path, 'w') as f:
+        json.dump({
+            "causal_effect": float(estimate.value),
+            "interpretation": f"Applying {treatment} causes {outcome} to change by {estimate.value:.4f} on average",
+            "refutation": str(refutation)
+        }, f, indent=2)
+
+
     return _json_safe({
         "status": "success",
         "treatment": treatment,
@@ -861,7 +880,7 @@ async def auto_feature_synthesis(
     # Auto-install if needed (uses centralized utility)
     try:
         from .auto_install_utils import ensure_tool_dependencies
-        success, error_msg = ensure_tool_dependencies('auto_feature_synthesis', silent=False)
+        success, error_msg = await ensure_tool_dependencies('auto_feature_synthesis', silent=False)
         if not success:
             return {
                 "status": "error",
@@ -904,8 +923,8 @@ async def auto_feature_synthesis(
     new_features = len(feature_matrix.columns) - original_features
     
     # Save transformed data
-    export_dir = os.path.join(os.path.dirname(__file__), '.export')
-    os.makedirs(export_dir, exist_ok=True)
+    from .ds_tools import _get_workspace_dir
+    export_dir = _get_workspace_dir(tool_context, "reports")
     
     dataset_name = Path(csv_path).stem if csv_path else "dataset"
     output_path = os.path.join(export_dir, f"{dataset_name}_engineered.csv")
@@ -1001,6 +1020,14 @@ async def feature_importance_stability(
     }).sort_values('stability_score', ascending=False)
     
     stable_features = feature_stats[feature_stats['stability_score'] > 0.7]['feature'].tolist()
+
+    # Save report
+    from .ds_tools import _get_workspace_dir
+    reports_dir = _get_workspace_dir(tool_context, "reports")
+    report_path = os.path.join(reports_dir, "feature_stability_report.json")
+    with open(report_path, 'w') as f:
+        json.dump(feature_stats.to_dict('records'), f, indent=2)
+
     
     return _json_safe({
         "status": "success",
@@ -1067,8 +1094,8 @@ async def rebalance_fit(
     rebalanced_df = pd.DataFrame(X_resampled, columns=X.columns)
     rebalanced_df[target] = y_resampled
     
-    export_dir = os.path.join(os.path.dirname(__file__), '.export')
-    os.makedirs(export_dir, exist_ok=True)
+    from .ds_tools import _get_workspace_dir
+    export_dir = _get_workspace_dir(tool_context, "reports")
     
     dataset_name = Path(csv_path).stem if csv_path else "dataset"
     output_path = os.path.join(export_dir, f"{dataset_name}_rebalanced.csv")
@@ -1184,7 +1211,7 @@ async def ts_prophet_forecast(target: str, periods: int = 30, csv_path: Optional
     # Auto-install prophet if needed
     try:
         from .auto_install_utils import ensure_tool_dependencies
-        success, error_msg = ensure_tool_dependencies('ts_prophet_forecast', silent=False)
+        success, error_msg = await ensure_tool_dependencies('ts_prophet_forecast', silent=False)
         if not success:
             return {
                 "status": "error",
@@ -1219,8 +1246,8 @@ async def ts_prophet_forecast(target: str, periods: int = 30, csv_path: Optional
     forecast = model.predict(future)
     
     # Save forecast
-    export_dir = os.path.join(os.path.dirname(__file__), '.export')
-    os.makedirs(export_dir, exist_ok=True)
+    from .ds_tools import _get_workspace_dir
+    export_dir = _get_workspace_dir(tool_context, "reports")
     forecast_path = os.path.join(export_dir, "prophet_forecast.csv")
     forecast.to_csv(forecast_path, index=False)
     
@@ -1256,8 +1283,8 @@ async def embed_text_column(column: str, csv_path: Optional[str] = None, model: 
     embeddings = model.encode(df[column].astype(str).tolist())
     
     # Save embeddings
-    export_dir = os.path.join(os.path.dirname(__file__), '.export')
-    os.makedirs(export_dir, exist_ok=True)
+    from .ds_tools import _get_workspace_dir
+    export_dir = _get_workspace_dir(tool_context, "reports")
     embeddings_path = os.path.join(export_dir, "embeddings.npy")
     np.save(embeddings_path, embeddings)
     

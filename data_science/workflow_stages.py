@@ -220,7 +220,7 @@ def format_stage_menu(stage: dict) -> str:
     
     # Tip
     if stage.get('tip'):
-        lines.append(f"💡 TIP: {stage['tip']}")
+        lines.append(f"💡 **TIP:** {stage['tip']}")
         lines.append("")
     
     # Progress footer
@@ -243,6 +243,10 @@ def get_stage_for_tool(tool_name: str) -> int:
     """Determine which stage a tool belongs to (for auto-advancement)."""
     tool_name_lower = tool_name.lower()
     
+    # Specific checks first
+    if 'export_reports_for_latest_run_pathsafe' in tool_name_lower:
+        return 14
+
     # Stage 1: Data Collection & Initial Analysis
     if any(keyword in tool_name_lower for keyword in ['analyze_dataset', 'list_data', 'head', 'shape']):
         return 1
