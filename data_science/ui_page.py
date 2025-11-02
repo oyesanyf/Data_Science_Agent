@@ -1,4 +1,5 @@
 # data_science/ui_page.py
+from pathlib import Path
 """
 Centralized UI page sink for Data Science Agent.
 Creates individual markdown files for each tool execution, plus an index file.
@@ -375,12 +376,14 @@ async def publish_ui_blocks(ctx: CallbackContext, tool_name: str, blocks: List[D
       {"type":"table","title":"...","rows":[["col1","col2"],["v1","v2"],...]}
       {"type":"artifact_list","title":"...","files":["plot_1.png","report.pdf"]}
     """
+    print("DEBUG: publish_ui_blocks called")
     logger = _get_logger()
     logger.info(f"[UI SINK] publish_ui_blocks called for tool: {tool_name}, blocks count: {len(blocks)}")
     
     try:
         # Create individual file for this tool execution
         execution_file = _create_tool_execution_file(ctx, tool_name, blocks)
+        print(f"DEBUG: execution_file = {execution_file}")
         logger.info(f"[UI SINK] Created execution file: {execution_file}")
         
         # Update index file

@@ -767,30 +767,30 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
                     next_stage_id = tool_stage + 1
                     
                     # Only advance if we haven't already shown this stage
-                    if next_stage_id > current_stage and next_stage_id <= 14:
-                        # Get next stage menu
-                        next_stage = get_next_stage(tool_stage)
-                        stage_menu = format_stage_menu(next_stage)
+                    # if next_stage_id > current_stage and next_stage_id <= 14:
+                    #     # Get next stage menu
+                    #     next_stage = get_next_stage(tool_stage)
+                    #     stage_menu = format_stage_menu(next_stage)
                         
-                        # Append status summary and next menu to result display
-                        if isinstance(result, dict):
-                            existing_display = result.get("__display__", "") or result.get("message", "") or ""
-                            # Add status summary, then next stage menu
-                            result["__display__"] = existing_display + status_summary + "\n\n" + "=" * 60 + "\n\n" + stage_menu
-                            result["message"] = result["__display__"]  # Keep in sync
+                    #     # Append status summary and next menu to result display
+                    #     if isinstance(result, dict):
+                    #         existing_display = result.get("__display__", "") or result.get("message", "") or ""
+                    #         # Add status summary, then next stage menu
+                    #         result["__display__"] = existing_display + status_summary + "\n\n" + "=" * 60 + "\n\n" + stage_menu
+                    #         result["message"] = result["__display__"]  # Keep in sync
                             
-                            # Update workflow stage in state
-                            callback_context.state["workflow_stage"] = next_stage_id
-                            logger.info(f"[WORKFLOW] ✅ Stage {tool_stage} ({stage_name}) COMPLETED → Advanced to Stage {next_stage_id}: {next_stage['name']}")
-                        else:
-                            logger.debug(f"[WORKFLOW] Result is not dict, cannot append menu")
-                    else:
-                        # Still add status summary even if not advancing
-                        if isinstance(result, dict):
-                            existing_display = result.get("__display__", "") or result.get("message", "") or ""
-                            result["__display__"] = existing_display + status_summary
-                            result["message"] = result["__display__"]
-                        logger.debug(f"[WORKFLOW] Stage {next_stage_id} already shown or complete")
+                    #         # Update workflow stage in state
+                    #         callback_context.state["workflow_stage"] = next_stage_id
+                    #         logger.info(f"[WORKFLOW] ✅ Stage {tool_stage} ({stage_name}) COMPLETED → Advanced to Stage {next_stage_id}: {next_stage['name']}")
+                    #     else:
+                    #         logger.debug(f"[WORKFLOW] Result is not dict, cannot append menu")
+                    # else:
+                    #     # Still add status summary even if not advancing
+                    #     if isinstance(result, dict):
+                    #         existing_display = result.get("__display__", "") or result.get("message", "") or ""
+                    #         result["__display__"] = existing_display + status_summary
+                    #         result["message"] = result["__display__"]
+                    #     logger.debug(f"[WORKFLOW] Stage {next_stage_id} already shown or complete")
                 else:
                     # Unknown status - add neutral status summary
                     status_summary = (

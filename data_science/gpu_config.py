@@ -75,11 +75,6 @@ def get_gpu_params_autogluon():
     Returns:
         dict: Parameters to pass to AutoGluon predictor
     """
-    if GPU_AVAILABLE:
-        return {
-            'ag_args_fit': {'num_gpus': 1},
-            'ag_args_ensemble': {'num_gpus': 0.5},  # Share GPU across models
-        }
     return {}
 
 
