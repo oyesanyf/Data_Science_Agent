@@ -5155,6 +5155,41 @@ Key Findings:
     results["_formatted_output"] = formatted_message
     results["status"] = "success"
     
+    # CRITICAL: Save artifacts directly (same pattern as analyze_dataset)
+    results["artifacts"] = []
+    if tool_context is not None:
+        try:
+            from google.genai import types
+            # Save stats output as markdown artifact
+            stats_md = f"# Statistical Analysis Results\n\n{formatted_message}\n"
+            # Remove control characters that can corrupt markdown display
+            import re
+            stats_md = re.sub(r'[\x00-\x08\x0b-\x0c\x0e-\x1f]', '', stats_md)
+            # Save with explicit UTF-8 encoding
+            await tool_context.save_artifact(
+                filename="reports/stats_output.md",
+                artifact=types.Part.from_bytes(
+                    data=stats_md.encode('utf-8', errors='replace'),
+                    mime_type="text/markdown"
+                ),
+            )
+            results["artifacts"].append("reports/stats_output.md")
+            logger.info(f"[stats] ✅ Saved stats_output.md artifact")
+            
+            # Save full stats as JSON artifact for programmatic access
+            full_stats_json = json.dumps(results, default=str).encode("utf-8")
+            await tool_context.save_artifact(
+                filename="reports/stats_full.json",
+                artifact=types.Part.from_bytes(
+                    data=full_stats_json,
+                    mime_type="application/json",
+                ),
+            )
+            results["artifacts"].append("reports/stats_full.json")
+            logger.info(f"[stats] ✅ Saved stats_full.json artifact")
+        except Exception as e:
+            logger.error(f"[stats] ❌ Failed to save artifacts: {e}")
+    
     return _json_safe(results)
 
 

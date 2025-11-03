@@ -3755,6 +3755,42 @@ def correlation_analysis_tool(csv_path: str = "", method: str = "pearson", tool_
         
         logger.info(f"[correlation_analysis_tool] Found {len(strong_correlations)} strong correlations")
         
+        # CRITICAL: Save artifacts directly (same pattern as analyze_dataset)
+        result["artifacts"] = []
+        if tool_context is not None:
+            try:
+                from google.genai import types
+                # Save correlation analysis output as markdown artifact
+                corr_md = f"# Correlation Analysis Results\n\n{result.get('__display__', result.get('message', ''))}\n"
+                # Remove control characters that can corrupt markdown display
+                import re
+                corr_md = re.sub(r'[\x00-\x08\x0b-\x0c\x0e-\x1f]', '', corr_md)
+                # Save with explicit UTF-8 encoding
+                _run_async(tool_context.save_artifact(
+                    filename="reports/correlation_analysis_output.md",
+                    artifact=types.Part.from_bytes(
+                        data=corr_md.encode('utf-8', errors='replace'),
+                        mime_type="text/markdown"
+                    ),
+                ))
+                result["artifacts"].append("reports/correlation_analysis_output.md")
+                logger.info(f"[correlation_analysis_tool] ✅ Saved correlation_analysis_output.md artifact")
+                
+                # Save full correlation data as JSON artifact
+                import json
+                full_corr_json = json.dumps(result, default=str).encode("utf-8")
+                _run_async(tool_context.save_artifact(
+                    filename="reports/correlation_full.json",
+                    artifact=types.Part.from_bytes(
+                        data=full_corr_json,
+                        mime_type="application/json",
+                    ),
+                ))
+                result["artifacts"].append("reports/correlation_full.json")
+                logger.info(f"[correlation_analysis_tool] ✅ Saved correlation_full.json artifact")
+            except Exception as e:
+                logger.error(f"[correlation_analysis_tool] ❌ Failed to save artifacts: {e}")
+        
     except Exception as e:
         logger.error(f"[correlation_analysis_tool] Failed: {e}", exc_info=True)
         return {
