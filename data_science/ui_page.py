@@ -252,7 +252,6 @@ def _get_executions_dir(ctx: CallbackContext) -> Path:
         if not workspace_root:
             try:
                 from .large_data_config import UPLOAD_ROOT
-                from pathlib import Path
                 workspaces_root = Path(UPLOAD_ROOT) / "_workspaces"
                 if workspaces_root.exists():
                     # Find the most recently modified workspace (excluding default/_global)

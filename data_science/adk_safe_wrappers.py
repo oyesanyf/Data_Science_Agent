@@ -746,10 +746,9 @@ def _ensure_ui_display(result: Any, tool_name: str = "tool", tool_context: Any =
 
 # ===== CORE DATA SCIENCE TOOLS =====
 
-def scale_data_tool(scaler: str = "StandardScaler", csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def scale_data_tool(scaler: str = "StandardScaler", csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for scale_data."""
     from .ds_tools import scale_data
-    tool_context = kwargs.get("tool_context")
     csv_path = _resolve_csv_path(csv_path, tool_context, "scale_data")  # ✅ Use uploaded file
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
@@ -774,10 +773,9 @@ def scale_data_tool(scaler: str = "StandardScaler", csv_path: str = "", **kwargs
     _log_tool_result_diagnostics(result, "scale_data", "raw_tool_output")
     return _ensure_ui_display(result, "scale_data", tool_context)
 
-def encode_data_tool(encoder: str = "OneHotEncoder", csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def encode_data_tool(encoder: str = "OneHotEncoder", csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for encode_data."""
     from .ds_tools import encode_data
-    tool_context = kwargs.get("tool_context")
     csv_path = _resolve_csv_path(csv_path, tool_context, "encode_data")  # ✅ Use uploaded file
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
@@ -804,10 +802,9 @@ def encode_data_tool(encoder: str = "OneHotEncoder", csv_path: str = "", **kwarg
     _log_tool_result_diagnostics(result, "encode_data", "raw_tool_output")
     return _ensure_ui_display(result, "encode_data", tool_context)
 
-def expand_features_tool(method: str = "polynomial", degree: int = 2, csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def expand_features_tool(method: str = "polynomial", degree: int = 2, csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for expand_features."""
     from .ds_tools import expand_features
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -831,10 +828,9 @@ def expand_features_tool(method: str = "polynomial", degree: int = 2, csv_path: 
     _log_tool_result_diagnostics(result, "expand_features", "raw_tool_output")
     return _ensure_ui_display(result, "expand_features", tool_context)
 
-def impute_simple_tool(csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def impute_simple_tool(csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for impute_simple."""
     from .ds_tools import impute_simple
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -858,10 +854,9 @@ def impute_simple_tool(csv_path: str = "", **kwargs) -> Dict[str, Any]:
     _log_tool_result_diagnostics(result, "impute_simple", "raw_tool_output")
     return _ensure_ui_display(result, "impute_simple", tool_context)
 
-def impute_knn_tool(n_neighbors: int = 5, csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def impute_knn_tool(n_neighbors: int = 5, csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for impute_knn."""
     from .ds_tools import impute_knn
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -885,10 +880,9 @@ def impute_knn_tool(n_neighbors: int = 5, csv_path: str = "", **kwargs) -> Dict[
     _log_tool_result_diagnostics(result, "impute_knn", "raw_tool_output")
     return _ensure_ui_display(result, "impute_knn", tool_context)
 
-def impute_iterative_tool(csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def impute_iterative_tool(csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for impute_iterative."""
     from .ds_tools import impute_iterative
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -923,12 +917,11 @@ def robust_auto_clean_file_tool(
     drop_empty_columns: str = "yes",
     drop_duplicate_rows: str = "yes",
     keep_original_name: str = "yes",
+    tool_context=None,
     **kwargs,
 ) -> Dict[str, Any]:
     """ADK-safe wrapper for robust_auto_clean_file with artifact enforcement."""
     from .robust_auto_clean_file import robust_auto_clean_file as _robust_auto_clean_file
-
-    tool_context = kwargs.get("tool_context")
 
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -964,10 +957,9 @@ def robust_auto_clean_file_tool(
     _log_tool_result_diagnostics(result, "robust_auto_clean_file", "raw_tool_output")
     return _ensure_ui_display(result, "robust_auto_clean_file", tool_context)
 
-def select_features_tool(target: str, k: int = 10, csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def select_features_tool(target: str, k: int = 10, csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for select_features."""
     from .ds_tools import select_features
-    tool_context = kwargs.get("tool_context")
     csv_path = _resolve_csv_path(csv_path, tool_context, "select_features")  # ✅ Use uploaded file
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
@@ -1046,10 +1038,9 @@ def sequential_select_tool(target: str, direction: str = "forward", n_features: 
     _log_tool_result_diagnostics(result, "sequential_select", "raw_tool_output")
     return _ensure_ui_display(result, "sequential_select", tool_context)
 
-def split_data_tool(target: str, test_size: float = 0.2, csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def split_data_tool(target: str, test_size: float = 0.2, csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for split_data."""
     from .ds_tools import split_data
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -1073,11 +1064,10 @@ def split_data_tool(target: str, test_size: float = 0.2, csv_path: str = "", **k
     _log_tool_result_diagnostics(result, "split_data", "raw_tool_output")
     return _ensure_ui_display(result, "split_data", tool_context)
 
-def grid_search_tool(target: str, model: str, param_grid: str = "{}", csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def grid_search_tool(target: str, model: str, param_grid: str = "{}", csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for grid_search."""
     from .ds_tools import grid_search
     import json
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -1105,11 +1095,10 @@ def grid_search_tool(target: str, model: str, param_grid: str = "{}", csv_path: 
     _log_tool_result_diagnostics(result, "grid_search", "raw_tool_output")
     return _ensure_ui_display(result, "grid_search", tool_context)
 
-def evaluate_tool(target: str, model: str, params: str = "{}", csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def evaluate_tool(target: str, model: str, params: str = "{}", csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for evaluate."""
     from .ds_tools import evaluate
     import json
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -1347,10 +1336,9 @@ def train_baseline_model_tool(target: str, csv_path: str = "", **kwargs) -> Dict
     _log_tool_result_diagnostics(result, "train_baseline_model", "raw_tool_output")
     return _ensure_ui_display(result, "train_baseline_model", tool_context)
 
-def train_classifier_tool(target: str, model: str, csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def train_classifier_tool(target: str, model: str, csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for train_classifier."""
     from .ds_tools import train_classifier
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -1374,10 +1362,9 @@ def train_classifier_tool(target: str, model: str, csv_path: str = "", **kwargs)
     _log_tool_result_diagnostics(result, "train_classifier", "raw_tool_output")
     return _ensure_ui_display(result, "train_classifier", tool_context)
 
-def train_regressor_tool(target: str, model: str, csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def train_regressor_tool(target: str, model: str, csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for train_regressor."""
     from .ds_tools import train_regressor
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -1541,10 +1528,9 @@ def ensemble_tool(target: str, models: str = "[]", csv_path: str = "", **kwargs)
     _log_tool_result_diagnostics(result, "ensemble", "raw_tool_output")
     return _ensure_ui_display(result, "ensemble", tool_context)
 
-def explain_model_tool(model_name: str, csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def explain_model_tool(model_name: str, csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for explain_model."""
     from .ds_tools import explain_model
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -1595,11 +1581,10 @@ def anomaly_tool(method: str = "isolation_forest", csv_path: str = "", **kwargs)
     _log_tool_result_diagnostics(result, "anomaly", "raw_tool_output")
     return _ensure_ui_display(result, "anomaly", tool_context)
 
-def export_tool(format: str = "csv", filename: str = "", csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def export_tool(format: str = "csv", filename: str = "", csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for export (async -> sync)."""
     from .ds_tools import export
     import asyncio
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -1623,11 +1608,10 @@ def export_tool(format: str = "csv", filename: str = "", csv_path: str = "", **k
     _log_tool_result_diagnostics(result, "export", "raw_tool_output")
     return _ensure_ui_display(result, "export", tool_context)
 
-def export_executive_report_tool(title: str = "Data Science Report", csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def export_executive_report_tool(title: str = "Data Science Report", csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for export_executive_report (async -> sync)."""
     from .ds_tools import export_executive_report
     import asyncio
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
@@ -3103,7 +3087,7 @@ def auto_sklearn_regress_tool(target: str, csv_path: str = "", **kwargs) -> Dict
 
 # ===== ANALYSIS & VISUALIZATION =====
 
-def analyze_dataset_tool(csv_path: str = "", **kwargs) -> Dict[str, Any]:
+def analyze_dataset_tool(csv_path: str = "", tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for analyze_dataset."""
     from .ds_tools import analyze_dataset
     import logging
@@ -3111,8 +3095,6 @@ def analyze_dataset_tool(csv_path: str = "", **kwargs) -> Dict[str, Any]:
     from .utils.paths import ensure_workspace, resolve_csv
     from .utils.io import robust_read_table
     logger = logging.getLogger(__name__)
-    
-    tool_context = kwargs.get("tool_context")
     
     # Initialize result to avoid undefined variable
     result = None
@@ -3989,7 +3971,7 @@ def head_tool(n: int = 5, csv_path: str = "", **kwargs) -> Dict[str, Any]:
     _log_tool_result_diagnostics(result, "head", "raw_tool_output")
     return _ensure_ui_display(result, "head", tool_context)
 
-async def plot_tool(csv_path: str = "", max_charts: int = 8, **kwargs) -> Dict[str, Any]:
+async def plot_tool(csv_path: str = "", max_charts: int = 8, tool_context=None, **kwargs) -> Dict[str, Any]:
     """ADK-safe wrapper for plot (auto-plot).
 
     Note: The underlying plot function is async and expects (csv_path, max_charts, tool_context).
@@ -4002,8 +3984,6 @@ async def plot_tool(csv_path: str = "", max_charts: int = 8, **kwargs) -> Dict[s
     
     logger.info("="*80)
     logger.info(f"[PLOT_TOOL] Called with csv_path={csv_path}, max_charts={max_charts}")
-    
-    tool_context = kwargs.get("tool_context")
     
     # ===== CRITICAL: Setup artifact manager (enables artifact saving/loading) =====
     state = getattr(tool_context, "state", {}) if tool_context else {}
