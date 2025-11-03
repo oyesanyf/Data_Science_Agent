@@ -536,10 +536,11 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
             return None
         
         # CRITICAL: Initialize state-based tracking to prevent duplicate status messages across multiple callback invocations
+        # Use list instead of set because sets are not JSON serializable (required for ADK session persistence)
         if not hasattr(callback_context, 'state') or callback_context.state is None:
             callback_context.state = {}
         if '_status_added' not in callback_context.state:
-            callback_context.state['_status_added'] = set()
+            callback_context.state['_status_added'] = []
         
         # [OK] DEBUG: Log what we receive
         logger.info(f"[CALLBACK] Tool: {tool_name}")
@@ -758,7 +759,7 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
                         # CRITICAL: Use state-based tracking to prevent duplicates across callback invocations
                         status_key = f"{tool_name}_{tool_stage}_error"
                         if status_key not in callback_context.state['_status_added']:
-                            callback_context.state['_status_added'].add(status_key)
+                            callback_context.state['_status_added'].append(status_key)
                             existing_display = result.get("__display__", "")
                             result["__display__"] = existing_display + status_summary
                             result["message"] = result["__display__"]
@@ -793,7 +794,7 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
                             # CRITICAL: Use state-based tracking to prevent duplicates across callback invocations
                             status_key = f"{tool_name}_{tool_stage}_success_advance"
                             if status_key not in callback_context.state['_status_added']:
-                                callback_context.state['_status_added'].add(status_key)
+                                callback_context.state['_status_added'].append(status_key)
                                 existing_display = result.get("__display__", "") or result.get("message", "") or ""
                                 # Add status summary, then next stage menu
                                 result["__display__"] = existing_display + status_summary + "\n\n" + "=" * 60 + "\n\n" + stage_menu
@@ -812,7 +813,7 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
                             # CRITICAL: Use state-based tracking to prevent duplicates
                             status_key = f"{tool_name}_{tool_stage}_success_no_advance"
                             if status_key not in callback_context.state['_status_added']:
-                                callback_context.state['_status_added'].add(status_key)
+                                callback_context.state['_status_added'].append(status_key)
                                 existing_display = result.get("__display__", "") or result.get("message", "") or ""
                                 result["__display__"] = existing_display + status_summary
                                 result["message"] = result["__display__"]
@@ -835,7 +836,7 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
                         # CRITICAL: Use state-based tracking to prevent duplicates
                         status_key = f"{tool_name}_{tool_stage}_unknown"
                         if status_key not in callback_context.state['_status_added']:
-                            callback_context.state['_status_added'].add(status_key)
+                            callback_context.state['_status_added'].append(status_key)
                             existing_display = result.get("__display__", "") or result.get("message", "") or ""
                             result["__display__"] = existing_display + status_summary
                             result["message"] = result["__display__"]
@@ -1284,7 +1285,6 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
                 "message": f"{tool_name} completed (callback error: {str(e)[:100]})",
                 "callback_error": str(e)
             }
-            
     except Exception as e:
         logger.warning(f"After-tool callback outer exception: {e}")
         # Return safe fallback for outer exceptions too

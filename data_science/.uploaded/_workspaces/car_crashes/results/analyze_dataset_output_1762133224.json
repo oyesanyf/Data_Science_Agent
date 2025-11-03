@@ -1,0 +1,270 @@
+{
+  "tool_name": "analyze_dataset_tool",
+  "timestamp": "2025-11-02T19:27:04.707584",
+  "status": "success",
+  "display": " **Dataset Analysis Complete!**\n\n **Dataset Analysis Complete**\n\n**Shape:** 51 rows  8 columns\n**Columns:** 8\n\n**Numeric Features:** 9\n**Categorical Features:** 1\n\n**Datatype Breakdown:** Numeric: 7, Categorical: 1\n\n**Column Data Types (sample):**\n   total: float64 (numeric, non-null=51, unique=45)\n   speeding: float64 (numeric, non-null=51, unique=50)\n   alcohol: float64 (numeric, non-null=51, unique=50)\n   not_distracted: float64 (numeric, non-null=51, unique=50)\n   no_previous: float64 (numeric, non-null=51, unique=50)\n   ins_premium: float64 (numeric, non-null=51, unique=51)\n   ins_losses: float64 (numeric, non-null=51, unique=51)\n   abbrev: object (categorical, non-null=51, unique=51)\n\n**Artifacts Generated:** 5 files\n Check the Artifacts panel for visualizations:\n   reports/profile.json\n   plots/pairplot.png\n   plots/correlation_heatmap.png\n   pca_scree.png\n   kmeans_pca2d.png\n\n **Data Preview (First Rows)**\n\n```text\n|   total |   speeding |   alcohol |   not_distracted |   no_previous |   ins_premium |   ins_losses | abbrev   |\n|--------:|-----------:|----------:|-----------------:|--------------:|--------------:|-------------:|:---------|\n|    18.8 |      7.332 |     5.64  |           18.048 |        15.04  |        784.55 |       145.08 | AL       |\n|    18.1 |      7.421 |     4.525 |           16.29  |        17.014 |       1053.48 |       133.93 | AK       |\n|    18.6 |      6.51  |     5.208 |           15.624 |        17.856 |        899.47 |       110.35 | AZ       |\n|    22.4 |      4.032 |     5.824 |           21.056 |        21.28  |        827.34 |       142.39 | AR       |\n|    12   |      4.2   |     3.36  |           10.92  |        10.68  |        878.41 |       165.63 | CA       |\n```\n\n**Shape:** 51 rows  8 columns\n\n**Columns:** total, speeding, alcohol, not_distracted, no_previous, ins_premium, ins_losses, abbrev\n\n **Data Summary & Statistics**\n\n```json\n{\n  \"total\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 15.79019607843137,\n    \"std\": 4.122002178648661,\n    \"min\": 5.9,\n    \"25%\": 12.75,\n    \"50%\": 15.6,\n    \"75%\": 18.5,\n    \"max\": 23.9\n  },\n  \"speeding\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.998196078431373,\n    \"std\": 2.0177470903917354,\n    \"min\": 1.7919999999999998,\n    \"25%\": 3.7664999999999997,\n    \"50%\": 4.6080000000000005,\n    \"75%\": 6.439,\n    \"max\": 9.45\n  },\n  \"alcohol\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.8867843137254905,\n    \"std\": 1.7291329077167608,\n    \"min\": 1.5930000000000002,\n    \"25%\": 3.894,\n    \"50%\": 4.554,\n    \"75%\": 5.603999999999999,\n    \"max\": 10.038\n  },\n  \"not_distracted\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 13.573176470588237,\n    \"std\": 4.508977084465532,\n    \"min\": 1.76,\n    \"25%\": 10.477999999999998,\n    \"50%\": 13.857,\n    \"75%\": 16.14,\n    \"max\": 23.661\n  },\n  \"no_previous\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 14.004882352941177,\n    \"std\": 3.7646718988355885,\n    \"min\": 5.9,\n    \"25%\": 11.347999999999999,\n    \"50%\": 13.775,\n    \"75%\": 16.755,\n    \"max\": 21.28\n  },\n  \"ins_premium\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 886.9576470588235,\n    \"std\": 178.29628479122314,\n    \"min\": 641.96,\n    \"25%\": 768.4300000000001,\n    \"50%\": 858.97,\n    \"75%\": 1007.9449999999999,\n    \"max\": 1301.52\n  },\n  \"ins_losses\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 134.49313725490197,\n    \"std\": 24.835922490634093,\n    \"min\": 82.75,\n    \"25%\": 114.645,\n    \"50%\": 136.05,\n    \"75%\": 151.87,\n    \"max\": 194.78\n  },\n  \"abbrev\": {\n    \"count\": 51,\n    \"unique\": 51,\n    \"top\": \"AL\",\n    \"freq\": 1,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  }\n}\n```\n\n**Dataset Shape:** 51 rows  8 columns\n\n**Total Columns:** 8\n\n**Numeric Features:** 7\n\n**Categorical Features:** 1\n\n **Ready for next steps** - See recommended options above!\n\n\ud83d\udcc4 **Note:** Full analysis results have been saved to:\n- `reports/analysis_output.md` (formatted results)\n- `reports/analyze_dataset_combined.md` (detailed analysis)\n- `reports/full_analysis.json` (complete data)\n\n\n\n============================================================\n\n\ud83d\udea8\ud83d\udea8\ud83d\udea8 **MANDATORY - LLM MUST DISPLAY THIS MENU:**\n\n## \ud83d\udccb **SEQUENTIAL WORKFLOW MENU - NEXT STEPS**\n\n**THIS MENU IS EMBEDDED IN THE __display__ FIELD - YOU MUST EXTRACT AND SHOW IT TO THE USER!**\n\nThe menu below shows all available tools organized by workflow stages. Users need to see ALL options to choose their next action.\n\nStep 1 = File Discovery (list_data_files), Step 2 = EDA (analyze_dataset). Full tool menu:\n\nRecommended Next Actions:\n1. list_data_files()\n2. analyze_dataset()\n2. describe()\n3. plot(kind='correlation')\n\n\ud83d\udca1 **TIP:** Choose a tool from the numbered options above to proceed with the next stage of your data science workflow.\n\n\ud83d\udea8 **REMINDER TO LLM:** This menu is part of the tool's output - NEVER skip displaying it!\n",
+  "data": {
+    "shape": {
+      "rows": 51,
+      "cols": 8
+    },
+    "columns": 8,
+    "numeric_features": 9,
+    "categorical_features": 1,
+    "head_preview": {
+      "status": "success",
+      "head": [
+        {
+          "total": 18.8,
+          "speeding": 7.332000000000001,
+          "alcohol": 5.64,
+          "not_distracted": 18.048,
+          "no_previous": 15.04,
+          "ins_premium": 784.55,
+          "ins_losses": 145.08,
+          "abbrev": "AL"
+        },
+        {
+          "total": 18.1,
+          "speeding": 7.421,
+          "alcohol": 4.525,
+          "not_distracted": 16.290000000000003,
+          "no_previous": 17.014,
+          "ins_premium": 1053.48,
+          "ins_losses": 133.93,
+          "abbrev": "AK"
+        },
+        {
+          "total": 18.6,
+          "speeding": 6.51,
+          "alcohol": 5.208000000000001,
+          "not_distracted": 15.624,
+          "no_previous": 17.856,
+          "ins_premium": 899.47,
+          "ins_losses": 110.35,
+          "abbrev": "AZ"
+        },
+        {
+          "total": 22.4,
+          "speeding": 4.032,
+          "alcohol": 5.824,
+          "not_distracted": 21.056,
+          "no_previous": 21.28,
+          "ins_premium": 827.34,
+          "ins_losses": 142.39,
+          "abbrev": "AR"
+        },
+        {
+          "total": 12.0,
+          "speeding": 4.2,
+          "alcohol": 3.36,
+          "not_distracted": 10.92,
+          "no_previous": 10.68,
+          "ins_premium": 878.41,
+          "ins_losses": 165.63,
+          "abbrev": "CA"
+        }
+      ],
+      "shape": [
+        51,
+        8
+      ],
+      "columns": [
+        "total",
+        "speeding",
+        "alcohol",
+        "not_distracted",
+        "no_previous",
+        "ins_premium",
+        "ins_losses",
+        "abbrev"
+      ],
+      "dtypes": {
+        "total": "float64",
+        "speeding": "float64",
+        "alcohol": "float64",
+        "not_distracted": "float64",
+        "no_previous": "float64",
+        "ins_premium": "float64",
+        "ins_losses": "float64",
+        "abbrev": "object"
+      },
+      "message": " **Data Preview (First Rows)**\n\n```text\n|   total |   speeding |   alcohol |   not_distracted |   no_previous |   ins_premium |   ins_losses | abbrev   |\n|--------:|-----------:|----------:|-----------------:|--------------:|--------------:|-------------:|:---------|\n|    18.8 |      7.332 |     5.64  |           18.048 |        15.04  |        784.55 |       145.08 | AL       |\n|    18.1 |      7.421 |     4.525 |           16.29  |        17.014 |       1053.48 |       133.93 | AK       |\n|    18.6 |      6.51  |     5.208 |           15.624 |        17.856 |        899.47 |       110.35 | AZ       |\n|    22.4 |      4.032 |     5.824 |           21.056 |        21.28  |        827.34 |       142.39 | AR       |\n|    12   |      4.2   |     3.36  |           10.92  |        10.68  |        878.41 |       165.63 | CA       |\n```\n\n**Shape:** 51 rows \u00d7 8 columns\n\n**Columns:** total, speeding, alcohol, not_distracted, no_previous, ins_premium, ins_losses, abbrev",
+      "__display__": " **Data Preview (First Rows)**\n\n```text\n|   total |   speeding |   alcohol |   not_distracted |   no_previous |   ins_premium |   ins_losses | abbrev   |\n|--------:|-----------:|----------:|-----------------:|--------------:|--------------:|-------------:|:---------|\n|    18.8 |      7.332 |     5.64  |           18.048 |        15.04  |        784.55 |       145.08 | AL       |\n|    18.1 |      7.421 |     4.525 |           16.29  |        17.014 |       1053.48 |       133.93 | AK       |\n|    18.6 |      6.51  |     5.208 |           15.624 |        17.856 |        899.47 |       110.35 | AZ       |\n|    22.4 |      4.032 |     5.824 |           21.056 |        21.28  |        827.34 |       142.39 | AR       |\n|    12   |      4.2   |     3.36  |           10.92  |        10.68  |        878.41 |       165.63 | CA       |\n```\n\n**Shape:** 51 rows \u00d7 8 columns\n\n**Columns:** total, speeding, alcohol, not_distracted, no_previous, ins_premium, ins_losses, abbrev",
+      "text": " **Data Preview (First Rows)**\n\n```text\n|   total |   speeding |   alcohol |   not_distracted |   no_previous |   ins_premium |   ins_losses | abbrev   |\n|--------:|-----------:|----------:|-----------------:|--------------:|--------------:|-------------:|:---------|\n|    18.8 |      7.332 |     5.64  |           18.048 |        15.04  |        784.55 |       145.08 | AL       |\n|    18.1 |      7.421 |     4.525 |           16.29  |        17.014 |       1053.48 |       133.93 | AK       |\n|    18.6 |      6.51  |     5.208 |           15.624 |        17.856 |        899.47 |       110.35 | AZ       |\n|    22.4 |      4.032 |     5.824 |           21.056 |        21.28  |        827.34 |       142.39 | AR       |\n|    12   |      4.2   |     3.36  |           10.92  |        10.68  |        878.41 |       165.63 | CA       |\n```\n\n**Shape:** 51 rows \u00d7 8 columns\n\n**Columns:** total, speeding, alcohol, not_distracted, no_previous, ins_premium, ins_losses, abbrev",
+      "ui_text": " **Data Preview (First Rows)**\n\n```text\n|   total |   speeding |   alcohol |   not_distracted |   no_previous |   ins_premium |   ins_losses | abbrev   |\n|--------:|-----------:|----------:|-----------------:|--------------:|--------------:|-------------:|:---------|\n|    18.8 |      7.332 |     5.64  |           18.048 |        15.04  |        784.55 |       145.08 | AL       |\n|    18.1 |      7.421 |     4.525 |           16.29  |        17.014 |       1053.48 |       133.93 | AK       |\n|    18.6 |      6.51  |     5.208 |           15.624 |        17.856 |        899.47 |       110.35 | AZ       |\n|    22.4 |      4.032 |     5.824 |           21.056 |        21.28  |        827.34 |       142.39 | AR       |\n|    12   |      4.2   |     3.36  |           10.92  |        10.68  |        878.41 |       165.63 | CA       |\n```\n\n**Shape:** 51 rows \u00d7 8 columns\n\n**Columns:** total, speeding, alcohol, not_distracted, no_previous, ins_premium, ins_losses, abbrev",
+      "content": " **Data Preview (First Rows)**\n\n```text\n|   total |   speeding |   alcohol |   not_distracted |   no_previous |   ins_premium |   ins_losses | abbrev   |\n|--------:|-----------:|----------:|-----------------:|--------------:|--------------:|-------------:|:---------|\n|    18.8 |      7.332 |     5.64  |           18.048 |        15.04  |        784.55 |       145.08 | AL       |\n|    18.1 |      7.421 |     4.525 |           16.29  |        17.014 |       1053.48 |       133.93 | AK       |\n|    18.6 |      6.51  |     5.208 |           15.624 |        17.856 |        899.47 |       110.35 | AZ       |\n|    22.4 |      4.032 |     5.824 |           21.056 |        21.28  |        827.34 |       142.39 | AR       |\n|    12   |      4.2   |     3.36  |           10.92  |        10.68  |        878.41 |       165.63 | CA       |\n```\n\n**Shape:** 51 rows \u00d7 8 columns\n\n**Columns:** total, speeding, alcohol, not_distracted, no_previous, ins_premium, ins_losses, abbrev",
+      "display": " **Data Preview (First Rows)**\n\n```text\n|   total |   speeding |   alcohol |   not_distracted |   no_previous |   ins_premium |   ins_losses | abbrev   |\n|--------:|-----------:|----------:|-----------------:|--------------:|--------------:|-------------:|:---------|\n|    18.8 |      7.332 |     5.64  |           18.048 |        15.04  |        784.55 |       145.08 | AL       |\n|    18.1 |      7.421 |     4.525 |           16.29  |        17.014 |       1053.48 |       133.93 | AK       |\n|    18.6 |      6.51  |     5.208 |           15.624 |        17.856 |        899.47 |       110.35 | AZ       |\n|    22.4 |      4.032 |     5.824 |           21.056 |        21.28  |        827.34 |       142.39 | AR       |\n|    12   |      4.2   |     3.36  |           10.92  |        10.68  |        878.41 |       165.63 | CA       |\n```\n\n**Shape:** 51 rows \u00d7 8 columns\n\n**Columns:** total, speeding, alcohol, not_distracted, no_previous, ins_premium, ins_losses, abbrev",
+      "_formatted_output": " **Data Preview (First Rows)**\n\n```text\n|   total |   speeding |   alcohol |   not_distracted |   no_previous |   ins_premium |   ins_losses | abbrev   |\n|--------:|-----------:|----------:|-----------------:|--------------:|--------------:|-------------:|:---------|\n|    18.8 |      7.332 |     5.64  |           18.048 |        15.04  |        784.55 |       145.08 | AL       |\n|    18.1 |      7.421 |     4.525 |           16.29  |        17.014 |       1053.48 |       133.93 | AK       |\n|    18.6 |      6.51  |     5.208 |           15.624 |        17.856 |        899.47 |       110.35 | AZ       |\n|    22.4 |      4.032 |     5.824 |           21.056 |        21.28  |        827.34 |       142.39 | AR       |\n|    12   |      4.2   |     3.36  |           10.92  |        10.68  |        878.41 |       165.63 | CA       |\n```\n\n**Shape:** 51 rows \u00d7 8 columns\n\n**Columns:** total, speeding, alcohol, not_distracted, no_previous, ins_premium, ins_losses, abbrev",
+      "artifacts": [
+        "D:\\harfile\\Data_Science_Agent\\data_science\\.uploaded\\_workspaces\\car_crashes\\20251102_192558\\reports\\head_output.md"
+      ]
+    },
+    "describe_summary": {
+      "status": "success",
+      "overview": {
+        "total": {
+          "count": 51.0,
+          "unique": null,
+          "top": null,
+          "freq": null,
+          "mean": 15.79019607843137,
+          "std": 4.122002178648661,
+          "min": 5.9,
+          "25%": 12.75,
+          "50%": 15.6,
+          "75%": 18.5,
+          "max": 23.9
+        },
+        "speeding": {
+          "count": 51.0,
+          "unique": null,
+          "top": null,
+          "freq": null,
+          "mean": 4.998196078431373,
+          "std": 2.0177470903917354,
+          "min": 1.7919999999999998,
+          "25%": 3.7664999999999997,
+          "50%": 4.6080000000000005,
+          "75%": 6.439,
+          "max": 9.45
+        },
+        "alcohol": {
+          "count": 51.0,
+          "unique": null,
+          "top": null,
+          "freq": null,
+          "mean": 4.8867843137254905,
+          "std": 1.7291329077167608,
+          "min": 1.5930000000000002,
+          "25%": 3.894,
+          "50%": 4.554,
+          "75%": 5.603999999999999,
+          "max": 10.038
+        },
+        "not_distracted": {
+          "count": 51.0,
+          "unique": null,
+          "top": null,
+          "freq": null,
+          "mean": 13.573176470588237,
+          "std": 4.508977084465532,
+          "min": 1.76,
+          "25%": 10.477999999999998,
+          "50%": 13.857,
+          "75%": 16.14,
+          "max": 23.661
+        },
+        "no_previous": {
+          "count": 51.0,
+          "unique": null,
+          "top": null,
+          "freq": null,
+          "mean": 14.004882352941177,
+          "std": 3.7646718988355885,
+          "min": 5.9,
+          "25%": 11.347999999999999,
+          "50%": 13.775,
+          "75%": 16.755,
+          "max": 21.28
+        },
+        "ins_premium": {
+          "count": 51.0,
+          "unique": null,
+          "top": null,
+          "freq": null,
+          "mean": 886.9576470588235,
+          "std": 178.29628479122314,
+          "min": 641.96,
+          "25%": 768.4300000000001,
+          "50%": 858.97,
+          "75%": 1007.9449999999999,
+          "max": 1301.52
+        },
+        "ins_losses": {
+          "count": 51.0,
+          "unique": null,
+          "top": null,
+          "freq": null,
+          "mean": 134.49313725490197,
+          "std": 24.835922490634093,
+          "min": 82.75,
+          "25%": 114.645,
+          "50%": 136.05,
+          "75%": 151.87,
+          "max": 194.78
+        },
+        "abbrev": {
+          "count": 51,
+          "unique": 51,
+          "top": "AL",
+          "freq": 1,
+          "mean": null,
+          "std": null,
+          "min": null,
+          "25%": null,
+          "50%": null,
+          "75%": null,
+          "max": null
+        }
+      },
+      "shape": [
+        51,
+        8
+      ],
+      "columns": [
+        "total",
+        "speeding",
+        "alcohol",
+        "not_distracted",
+        "no_previous",
+        "ins_premium",
+        "ins_losses",
+        "abbrev"
+      ],
+      "dtypes": {
+        "total": "float64",
+        "speeding": "float64",
+        "alcohol": "float64",
+        "not_distracted": "float64",
+        "no_previous": "float64",
+        "ins_premium": "float64",
+        "ins_losses": "float64",
+        "abbrev": "object"
+      },
+      "numeric_features": [
+        "total",
+        "speeding",
+        "alcohol",
+        "not_distracted",
+        "no_previous",
+        "ins_premium",
+        "ins_losses"
+      ],
+      "categorical_features": [
+        "abbrev"
+      ],
+      "missing_values": {},
+      "total_missing": 0,
+      "message": " **Data Summary & Statistics**\n\n```json\n{\n  \"total\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 15.79019607843137,\n    \"std\": 4.122002178648661,\n    \"min\": 5.9,\n    \"25%\": 12.75,\n    \"50%\": 15.6,\n    \"75%\": 18.5,\n    \"max\": 23.9\n  },\n  \"speeding\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.998196078431373,\n    \"std\": 2.0177470903917354,\n    \"min\": 1.7919999999999998,\n    \"25%\": 3.7664999999999997,\n    \"50%\": 4.6080000000000005,\n    \"75%\": 6.439,\n    \"max\": 9.45\n  },\n  \"alcohol\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.8867843137254905,\n    \"std\": 1.7291329077167608,\n    \"min\": 1.5930000000000002,\n    \"25%\": 3.894,\n    \"50%\": 4.554,\n    \"75%\": 5.603999999999999,\n    \"max\": 10.038\n  },\n  \"not_distracted\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 13.573176470588237,\n    \"std\": 4.508977084465532,\n    \"min\": 1.76,\n    \"25%\": 10.477999999999998,\n    \"50%\": 13.857,\n    \"75%\": 16.14,\n    \"max\": 23.661\n  },\n  \"no_previous\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 14.004882352941177,\n    \"std\": 3.7646718988355885,\n    \"min\": 5.9,\n    \"25%\": 11.347999999999999,\n    \"50%\": 13.775,\n    \"75%\": 16.755,\n    \"max\": 21.28\n  },\n  \"ins_premium\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 886.9576470588235,\n    \"std\": 178.29628479122314,\n    \"min\": 641.96,\n    \"25%\": 768.4300000000001,\n    \"50%\": 858.97,\n    \"75%\": 1007.9449999999999,\n    \"max\": 1301.52\n  },\n  \"ins_losses\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 134.49313725490197,\n    \"std\": 24.835922490634093,\n    \"min\": 82.75,\n    \"25%\": 114.645,\n    \"50%\": 136.05,\n    \"75%\": 151.87,\n    \"max\": 194.78\n  },\n  \"abbrev\": {\n    \"count\": 51,\n    \"unique\": 51,\n    \"top\": \"AL\",\n    \"freq\": 1,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  }\n}\n```\n\n**Dataset Shape:** 51 rows  8 columns\n\n**Total Columns:** 8\n\n**Numeric Features:** 7\n\n**Categorical Features:** 1",
+      "__display__": " **Data Summary & Statistics**\n\n```json\n{\n  \"total\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 15.79019607843137,\n    \"std\": 4.122002178648661,\n    \"min\": 5.9,\n    \"25%\": 12.75,\n    \"50%\": 15.6,\n    \"75%\": 18.5,\n    \"max\": 23.9\n  },\n  \"speeding\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.998196078431373,\n    \"std\": 2.0177470903917354,\n    \"min\": 1.7919999999999998,\n    \"25%\": 3.7664999999999997,\n    \"50%\": 4.6080000000000005,\n    \"75%\": 6.439,\n    \"max\": 9.45\n  },\n  \"alcohol\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.8867843137254905,\n    \"std\": 1.7291329077167608,\n    \"min\": 1.5930000000000002,\n    \"25%\": 3.894,\n    \"50%\": 4.554,\n    \"75%\": 5.603999999999999,\n    \"max\": 10.038\n  },\n  \"not_distracted\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 13.573176470588237,\n    \"std\": 4.508977084465532,\n    \"min\": 1.76,\n    \"25%\": 10.477999999999998,\n    \"50%\": 13.857,\n    \"75%\": 16.14,\n    \"max\": 23.661\n  },\n  \"no_previous\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 14.004882352941177,\n    \"std\": 3.7646718988355885,\n    \"min\": 5.9,\n    \"25%\": 11.347999999999999,\n    \"50%\": 13.775,\n    \"75%\": 16.755,\n    \"max\": 21.28\n  },\n  \"ins_premium\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 886.9576470588235,\n    \"std\": 178.29628479122314,\n    \"min\": 641.96,\n    \"25%\": 768.4300000000001,\n    \"50%\": 858.97,\n    \"75%\": 1007.9449999999999,\n    \"max\": 1301.52\n  },\n  \"ins_losses\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 134.49313725490197,\n    \"std\": 24.835922490634093,\n    \"min\": 82.75,\n    \"25%\": 114.645,\n    \"50%\": 136.05,\n    \"75%\": 151.87,\n    \"max\": 194.78\n  },\n  \"abbrev\": {\n    \"count\": 51,\n    \"unique\": 51,\n    \"top\": \"AL\",\n    \"freq\": 1,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  }\n}\n```\n\n**Dataset Shape:** 51 rows  8 columns\n\n**Total Columns:** 8\n\n**Numeric Features:** 7\n\n**Categorical Features:** 1",
+      "text": " **Data Summary & Statistics**\n\n```json\n{\n  \"total\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 15.79019607843137,\n    \"std\": 4.122002178648661,\n    \"min\": 5.9,\n    \"25%\": 12.75,\n    \"50%\": 15.6,\n    \"75%\": 18.5,\n    \"max\": 23.9\n  },\n  \"speeding\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.998196078431373,\n    \"std\": 2.0177470903917354,\n    \"min\": 1.7919999999999998,\n    \"25%\": 3.7664999999999997,\n    \"50%\": 4.6080000000000005,\n    \"75%\": 6.439,\n    \"max\": 9.45\n  },\n  \"alcohol\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.8867843137254905,\n    \"std\": 1.7291329077167608,\n    \"min\": 1.5930000000000002,\n    \"25%\": 3.894,\n    \"50%\": 4.554,\n    \"75%\": 5.603999999999999,\n    \"max\": 10.038\n  },\n  \"not_distracted\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 13.573176470588237,\n    \"std\": 4.508977084465532,\n    \"min\": 1.76,\n    \"25%\": 10.477999999999998,\n    \"50%\": 13.857,\n    \"75%\": 16.14,\n    \"max\": 23.661\n  },\n  \"no_previous\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 14.004882352941177,\n    \"std\": 3.7646718988355885,\n    \"min\": 5.9,\n    \"25%\": 11.347999999999999,\n    \"50%\": 13.775,\n    \"75%\": 16.755,\n    \"max\": 21.28\n  },\n  \"ins_premium\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 886.9576470588235,\n    \"std\": 178.29628479122314,\n    \"min\": 641.96,\n    \"25%\": 768.4300000000001,\n    \"50%\": 858.97,\n    \"75%\": 1007.9449999999999,\n    \"max\": 1301.52\n  },\n  \"ins_losses\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 134.49313725490197,\n    \"std\": 24.835922490634093,\n    \"min\": 82.75,\n    \"25%\": 114.645,\n    \"50%\": 136.05,\n    \"75%\": 151.87,\n    \"max\": 194.78\n  },\n  \"abbrev\": {\n    \"count\": 51,\n    \"unique\": 51,\n    \"top\": \"AL\",\n    \"freq\": 1,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  }\n}\n```\n\n**Dataset Shape:** 51 rows  8 columns\n\n**Total Columns:** 8\n\n**Numeric Features:** 7\n\n**Categorical Features:** 1",
+      "ui_text": " **Data Summary & Statistics**\n\n```json\n{\n  \"total\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 15.79019607843137,\n    \"std\": 4.122002178648661,\n    \"min\": 5.9,\n    \"25%\": 12.75,\n    \"50%\": 15.6,\n    \"75%\": 18.5,\n    \"max\": 23.9\n  },\n  \"speeding\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.998196078431373,\n    \"std\": 2.0177470903917354,\n    \"min\": 1.7919999999999998,\n    \"25%\": 3.7664999999999997,\n    \"50%\": 4.6080000000000005,\n    \"75%\": 6.439,\n    \"max\": 9.45\n  },\n  \"alcohol\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.8867843137254905,\n    \"std\": 1.7291329077167608,\n    \"min\": 1.5930000000000002,\n    \"25%\": 3.894,\n    \"50%\": 4.554,\n    \"75%\": 5.603999999999999,\n    \"max\": 10.038\n  },\n  \"not_distracted\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 13.573176470588237,\n    \"std\": 4.508977084465532,\n    \"min\": 1.76,\n    \"25%\": 10.477999999999998,\n    \"50%\": 13.857,\n    \"75%\": 16.14,\n    \"max\": 23.661\n  },\n  \"no_previous\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 14.004882352941177,\n    \"std\": 3.7646718988355885,\n    \"min\": 5.9,\n    \"25%\": 11.347999999999999,\n    \"50%\": 13.775,\n    \"75%\": 16.755,\n    \"max\": 21.28\n  },\n  \"ins_premium\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 886.9576470588235,\n    \"std\": 178.29628479122314,\n    \"min\": 641.96,\n    \"25%\": 768.4300000000001,\n    \"50%\": 858.97,\n    \"75%\": 1007.9449999999999,\n    \"max\": 1301.52\n  },\n  \"ins_losses\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 134.49313725490197,\n    \"std\": 24.835922490634093,\n    \"min\": 82.75,\n    \"25%\": 114.645,\n    \"50%\": 136.05,\n    \"75%\": 151.87,\n    \"max\": 194.78\n  },\n  \"abbrev\": {\n    \"count\": 51,\n    \"unique\": 51,\n    \"top\": \"AL\",\n    \"freq\": 1,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  }\n}\n```\n\n**Dataset Shape:** 51 rows  8 columns\n\n**Total Columns:** 8\n\n**Numeric Features:** 7\n\n**Categorical Features:** 1",
+      "content": " **Data Summary & Statistics**\n\n```json\n{\n  \"total\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 15.79019607843137,\n    \"std\": 4.122002178648661,\n    \"min\": 5.9,\n    \"25%\": 12.75,\n    \"50%\": 15.6,\n    \"75%\": 18.5,\n    \"max\": 23.9\n  },\n  \"speeding\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.998196078431373,\n    \"std\": 2.0177470903917354,\n    \"min\": 1.7919999999999998,\n    \"25%\": 3.7664999999999997,\n    \"50%\": 4.6080000000000005,\n    \"75%\": 6.439,\n    \"max\": 9.45\n  },\n  \"alcohol\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.8867843137254905,\n    \"std\": 1.7291329077167608,\n    \"min\": 1.5930000000000002,\n    \"25%\": 3.894,\n    \"50%\": 4.554,\n    \"75%\": 5.603999999999999,\n    \"max\": 10.038\n  },\n  \"not_distracted\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 13.573176470588237,\n    \"std\": 4.508977084465532,\n    \"min\": 1.76,\n    \"25%\": 10.477999999999998,\n    \"50%\": 13.857,\n    \"75%\": 16.14,\n    \"max\": 23.661\n  },\n  \"no_previous\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 14.004882352941177,\n    \"std\": 3.7646718988355885,\n    \"min\": 5.9,\n    \"25%\": 11.347999999999999,\n    \"50%\": 13.775,\n    \"75%\": 16.755,\n    \"max\": 21.28\n  },\n  \"ins_premium\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 886.9576470588235,\n    \"std\": 178.29628479122314,\n    \"min\": 641.96,\n    \"25%\": 768.4300000000001,\n    \"50%\": 858.97,\n    \"75%\": 1007.9449999999999,\n    \"max\": 1301.52\n  },\n  \"ins_losses\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 134.49313725490197,\n    \"std\": 24.835922490634093,\n    \"min\": 82.75,\n    \"25%\": 114.645,\n    \"50%\": 136.05,\n    \"75%\": 151.87,\n    \"max\": 194.78\n  },\n  \"abbrev\": {\n    \"count\": 51,\n    \"unique\": 51,\n    \"top\": \"AL\",\n    \"freq\": 1,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  }\n}\n```\n\n**Dataset Shape:** 51 rows  8 columns\n\n**Total Columns:** 8\n\n**Numeric Features:** 7\n\n**Categorical Features:** 1",
+      "display": " **Data Summary & Statistics**\n\n```json\n{\n  \"total\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 15.79019607843137,\n    \"std\": 4.122002178648661,\n    \"min\": 5.9,\n    \"25%\": 12.75,\n    \"50%\": 15.6,\n    \"75%\": 18.5,\n    \"max\": 23.9\n  },\n  \"speeding\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.998196078431373,\n    \"std\": 2.0177470903917354,\n    \"min\": 1.7919999999999998,\n    \"25%\": 3.7664999999999997,\n    \"50%\": 4.6080000000000005,\n    \"75%\": 6.439,\n    \"max\": 9.45\n  },\n  \"alcohol\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.8867843137254905,\n    \"std\": 1.7291329077167608,\n    \"min\": 1.5930000000000002,\n    \"25%\": 3.894,\n    \"50%\": 4.554,\n    \"75%\": 5.603999999999999,\n    \"max\": 10.038\n  },\n  \"not_distracted\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 13.573176470588237,\n    \"std\": 4.508977084465532,\n    \"min\": 1.76,\n    \"25%\": 10.477999999999998,\n    \"50%\": 13.857,\n    \"75%\": 16.14,\n    \"max\": 23.661\n  },\n  \"no_previous\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 14.004882352941177,\n    \"std\": 3.7646718988355885,\n    \"min\": 5.9,\n    \"25%\": 11.347999999999999,\n    \"50%\": 13.775,\n    \"75%\": 16.755,\n    \"max\": 21.28\n  },\n  \"ins_premium\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 886.9576470588235,\n    \"std\": 178.29628479122314,\n    \"min\": 641.96,\n    \"25%\": 768.4300000000001,\n    \"50%\": 858.97,\n    \"75%\": 1007.9449999999999,\n    \"max\": 1301.52\n  },\n  \"ins_losses\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 134.49313725490197,\n    \"std\": 24.835922490634093,\n    \"min\": 82.75,\n    \"25%\": 114.645,\n    \"50%\": 136.05,\n    \"75%\": 151.87,\n    \"max\": 194.78\n  },\n  \"abbrev\": {\n    \"count\": 51,\n    \"unique\": 51,\n    \"top\": \"AL\",\n    \"freq\": 1,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  }\n}\n```\n\n**Dataset Shape:** 51 rows  8 columns\n\n**Total Columns:** 8\n\n**Numeric Features:** 7\n\n**Categorical Features:** 1",
+      "_formatted_output": " **Data Summary & Statistics**\n\n```json\n{\n  \"total\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 15.79019607843137,\n    \"std\": 4.122002178648661,\n    \"min\": 5.9,\n    \"25%\": 12.75,\n    \"50%\": 15.6,\n    \"75%\": 18.5,\n    \"max\": 23.9\n  },\n  \"speeding\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.998196078431373,\n    \"std\": 2.0177470903917354,\n    \"min\": 1.7919999999999998,\n    \"25%\": 3.7664999999999997,\n    \"50%\": 4.6080000000000005,\n    \"75%\": 6.439,\n    \"max\": 9.45\n  },\n  \"alcohol\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 4.8867843137254905,\n    \"std\": 1.7291329077167608,\n    \"min\": 1.5930000000000002,\n    \"25%\": 3.894,\n    \"50%\": 4.554,\n    \"75%\": 5.603999999999999,\n    \"max\": 10.038\n  },\n  \"not_distracted\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 13.573176470588237,\n    \"std\": 4.508977084465532,\n    \"min\": 1.76,\n    \"25%\": 10.477999999999998,\n    \"50%\": 13.857,\n    \"75%\": 16.14,\n    \"max\": 23.661\n  },\n  \"no_previous\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 14.004882352941177,\n    \"std\": 3.7646718988355885,\n    \"min\": 5.9,\n    \"25%\": 11.347999999999999,\n    \"50%\": 13.775,\n    \"75%\": 16.755,\n    \"max\": 21.28\n  },\n  \"ins_premium\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 886.9576470588235,\n    \"std\": 178.29628479122314,\n    \"min\": 641.96,\n    \"25%\": 768.4300000000001,\n    \"50%\": 858.97,\n    \"75%\": 1007.9449999999999,\n    \"max\": 1301.52\n  },\n  \"ins_losses\": {\n    \"count\": 51.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 134.49313725490197,\n    \"std\": 24.835922490634093,\n    \"min\": 82.75,\n    \"25%\": 114.645,\n    \"50%\": 136.05,\n    \"75%\": 151.87,\n    \"max\": 194.78\n  },\n  \"abbrev\": {\n    \"count\": 51,\n    \"unique\": 51,\n    \"top\": \"AL\",\n    \"freq\": 1,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  }\n}\n```\n\n**Dataset Shape:** 51 rows  8 columns\n\n**Total Columns:** 8\n\n**Numeric Features:** 7\n\n**Categorical Features:** 1",
+      "artifacts": [
+        "D:\\harfile\\Data_Science_Agent\\data_science\\.uploaded\\_workspaces\\car_crashes\\20251102_192558\\reports\\describe_output.md"
+      ]
+    }
+  },
+  "artifacts": [
+    "reports/profile.json",
+    "plots/pairplot.png",
+    "plots/correlation_heatmap.png",
+    "pca_scree.png",
+    "kmeans_pca2d.png",
+    "reports/analysis_output.md"
+  ],
+  "metrics": {}
+}

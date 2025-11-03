@@ -1,2 +1,0 @@
-file_id=1762132287_taxis.csv
-path=D:\harfile\Data_Science_Agent\data_science\.uploaded\_workspaces\taxis\20251102_191127\uploads\1762132287_taxis.csv

@@ -230,13 +230,13 @@ def ensure_uv_sync(has_gpu: bool = False) -> None:
         print("     [GPU] MODE: 150+ tools ready with GPU acceleration")
         print("     All tools now use ADK-safe wrappers for optimal performance!")
         print("     AutoML, XGBoost, LightGBM will use GPU for 5-10x speedup!")
-        print("     [OK] Streaming tools ENABLED for real-time progress updates!\n")
+        print("     [OK] Non-streaming tools ONLY (streaming disabled - conflicts with interactive workflow)\n")
     else:
         print("[OK] All dependencies synced successfully!")
         print("     [CPU] MODE: 150+ tools ready")
         print("     All tools now use ADK-safe wrappers for optimal performance!")
         print("     AutoML, Sklearn, Fairness, Drift, Causal, HPO, and more")
-        print("     [OK] Streaming tools ENABLED for real-time progress updates!\n")
+        print("     [OK] Non-streaming tools ONLY (streaming disabled - conflicts with interactive workflow)\n")
 
 def main():
     banner()

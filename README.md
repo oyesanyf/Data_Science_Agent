@@ -6,7 +6,7 @@ A comprehensive AI-powered data science platform with 150+ ML tools, streaming c
 
 ### Core Capabilities
 - **150+ ML Tools**: Complete toolkit for data science, ML, and AI workflows
-- **✅ Streaming Tools ENABLED**: Real-time progress updates for long-running operations (HPO, training, EDA, forecasting)
+- **✅ 128 Reliable Tools**: Non-streaming tools for all data science workflows (streaming disabled to prevent auto-chaining conflicts)
 - **Smart Workspace Management**: Organized per-dataset workspaces with artifact tracking
 - **Unstructured Data Support**: Handle PDFs, images, documents, and more
 - **Auto Analysis**: Automatic head/describe after data analysis
@@ -206,22 +206,14 @@ Each dataset gets its own workspace with organized subdirectories:
 - `export_executive_report` - Generate PDF report
 - `export` - Export to various formats
 
-### ✅ Streaming Tools (15+ tools - ENABLED)
-- `stream_eda` - Full EDA pipeline with real-time updates
-- `stream_clean_validate` - Data cleaning + validation
-- `stream_feature_engineering` - Feature scaling, encoding, selection
-- `stream_recommend_and_train` - Model recommendation + training
-- `stream_hpo` - Hyperparameter optimization with Optuna
-- `stream_eval_explain` - Evaluation + SHAP explanations
-- `stream_inference` - Batch inference with progress
-- `stream_train_dl_batches` - Deep learning with per-batch loss
-- `stream_hpo_optuna_trials` - Trial-by-trial HPO results
-- `stream_prophet_phases` - Prophet forecasting phases
-- `stream_drift` - Real-time drift monitoring
-- `stream_fairness_and_governance` - Fairness analysis + MLflow
-- `stream_causal` - Causal inference workflow
-- `stream_timeseries` - Time series forecasting + backtesting
-- `stream_reports` - Executive report generation
+### ❌ Streaming Tools (DISABLED)
+**Note:** Streaming tools were intentionally disabled because they auto-chain multiple operations, which conflicts with the interactive "one tool per response" workflow.
+
+**Replaced with:** 128 reliable non-streaming tools that execute individually, allowing users to control the workflow step-by-step.
+
+**Reason for disabling:** Tools like `stream_eda` would automatically call `analyze_dataset` → `describe` → `plot` → `stats` in sequence, causing looping issues and taking control away from the user.
+
+**Alternative:** Use individual tools like `analyze_dataset_tool()`, `plot_tool_guard()`, `stats_tool_guard()`, etc. to build your workflow interactively.
 
 ## 📤 File Upload
 

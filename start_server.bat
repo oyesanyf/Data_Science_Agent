@@ -113,11 +113,11 @@ echo [OK] All dependencies synced successfully!
 if !GPU_DETECTED! equ 1 (
     echo      [92m[GPU MODE][0m 150+ tools ready with GPU acceleration - All tools use ADK-safe wrappers!
     echo      AutoML, XGBoost, LightGBM will use GPU for 5-10x speedup!
-    echo      [92m✅ Streaming tools ENABLED[0m for real-time progress updates!
+    echo      [92m✅ 128 Non-streaming tools[0m (streaming disabled)
 ) else (
     echo      [CPU MODE] 150+ tools ready - All tools use ADK-safe wrappers!
     echo      AutoML, Sklearn, Fairness, Drift, Causal, HPO, and more
-    echo      [92m✅ Streaming tools ENABLED[0m for real-time progress updates!
+    echo      [92m✅ 128 Non-streaming tools[0m (streaming disabled)
 )
 echo.
 

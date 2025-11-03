@@ -72,8 +72,8 @@ Write-Host "[OK] All dependencies synced successfully!" -ForegroundColor Green
 Write-Host "     150+ tools ready: AutoML, Sklearn, Fairness, Drift, Causal, HPO, and more" -ForegroundColor Cyan
 Write-Host "     All tools now use ADK-safe wrappers for optimal performance!" -ForegroundColor Green
 Write-Host "     " -NoNewline
-Write-Host "✅ Streaming tools ENABLED" -ForegroundColor Green -NoNewline
-Write-Host " for real-time progress updates!" -ForegroundColor Cyan
+Write-Host "✅ 128 Non-streaming tools" -ForegroundColor Green -NoNewline
+Write-Host " (streaming disabled - interactive workflow)" -ForegroundColor Cyan
 Write-Host ""
 
 # Start the server using uv
