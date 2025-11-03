@@ -787,19 +787,20 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
                         
                         # Append status summary and next menu to result display
                         if isinstance(result, dict):
-                            # CRITICAL: Check if status already IN the display content (prevents ALL duplicates)
-                            existing_display = result.get("__display__", "") or result.get("message", "") or ""
-                            status_marker = f"STAGE {tool_stage} STATUS:"
-                            if status_marker not in existing_display:
+                            # CRITICAL: Check if status has already been shown for this stage to prevent duplicates
+                            status_shown_key = f'stage_{tool_stage}_status_shown'
+                            if not callback_context.state.get(status_shown_key):
+                                existing_display = result.get("__display__", "") or result.get("message", "") or ""
                                 # Add status summary, then next stage menu
                                 result["__display__"] = existing_display + status_summary + "\n\n" + "=" * 60 + "\n\n" + stage_menu
                                 result["message"] = result["__display__"]  # Keep in sync
                                 
                                 # Update workflow stage in state
                                 callback_context.state["workflow_stage"] = next_stage_id
+                                callback_context.state[status_shown_key] = True # Mark as shown
                                 logger.info(f"[WORKFLOW] ✅ Stage {tool_stage} ({stage_name}) COMPLETED → Advanced to Stage {next_stage_id}: {next_stage['name']}")
                             else:
-                                logger.debug(f"[WORKFLOW] Status already in display for stage {tool_stage}, skipping duplicate")
+                                logger.debug(f"[WORKFLOW] Status already shown for stage {tool_stage}, skipping duplicate")
                         else:
                             logger.debug(f"[WORKFLOW] Result is not dict, cannot append menu")
                     else:

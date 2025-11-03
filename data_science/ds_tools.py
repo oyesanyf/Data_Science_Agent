@@ -1408,6 +1408,7 @@ async def analyze_dataset(
 
 
 @ensure_display_fields
+@ensure_display_fields
 async def describe_combo(
     csv_path: Optional[str] = None,
     n_rows: int = 5,
@@ -2715,6 +2716,7 @@ def _auto_detect_best_target(df) -> Optional[str]:
     return columns[0]
 
 
+@ensure_display_fields
 @ensure_display_fields
 async def classify(
     target: str,
@@ -4773,6 +4775,7 @@ async def evaluate(target: str, model: str, params: Optional[dict] = None, csv_p
 # ------------------- Feature extraction (text) -------------------
 
 @ensure_display_fields
+@ensure_display_fields
 async def text_to_features(text_col: str, csv_path: Optional[str] = None, tool_context: Optional[ToolContext] = None) -> dict:
     df = await _load_dataframe(csv_path, tool_context=tool_context)
     if text_col not in df.columns:
@@ -6125,6 +6128,7 @@ def list_tools(category: Optional[str] = None, tool_context: Optional[ToolContex
 # ============================================================================
 
 @ensure_display_fields
+@ensure_display_fields
 async def stop() -> dict:
     """
     🛑 Stop/interrupt ongoing processing and return control to user.
@@ -6345,6 +6349,7 @@ WORKFLOW_STAGES = [
 
 
 @ensure_display_fields
+@ensure_display_fields
 async def next_stage(tool_context=None) -> dict:
     """
     ➡️ Move to the next stage in the professional data science workflow.
@@ -6455,6 +6460,7 @@ async def next_stage(tool_context=None) -> dict:
 
 
 @ensure_display_fields
+@ensure_display_fields
 async def next_step(tool_context=None) -> dict:
     """
     ➡️ Move to the next step within the current workflow stage.
@@ -6560,6 +6566,7 @@ async def next_step(tool_context=None) -> dict:
     return result
 
 
+@ensure_display_fields
 @ensure_display_fields
 async def back_step(tool_context=None) -> dict:
     """
@@ -6746,6 +6753,7 @@ def _generate_backward_navigation_reason(current_stage: int, target_stage: int, 
 
 
 @ensure_display_fields
+@ensure_display_fields
 async def back_stage(tool_context=None) -> dict:
     """
     ⬅️ Go back to the previous stage in the professional data science workflow.
@@ -6862,6 +6870,7 @@ async def back_stage(tool_context=None) -> dict:
     return result
 
 
+@ensure_display_fields
 @ensure_display_fields
 async def question(
     query: str,
