@@ -25,9 +25,9 @@ def _get_logger():
     import logging
     try:
         # Prefer centralized tools logger if available
-        from logging_config import get_tools_logger  # type: ignore
+        from .logging_config import get_tools_logger
         return get_tools_logger()
-    except Exception:
+    except ImportError:
         # Fallback: use a logger named 'tools'
         logger = logging.getLogger("tools")
         if not logger.handlers:
@@ -252,7 +252,6 @@ def _get_executions_dir(ctx: CallbackContext) -> Path:
         if not workspace_root:
             try:
                 from .large_data_config import UPLOAD_ROOT
-                from pathlib import Path
                 workspaces_root = Path(UPLOAD_ROOT) / "_workspaces"
                 if workspaces_root.exists():
                     # Find the most recently modified workspace (excluding default/_global)
@@ -479,4 +478,3 @@ async def publish_ui_blocks(ctx: CallbackContext, tool_name: str, blocks: List[D
         logger.info(f"[UI SINK] [OK] publish_ui_blocks completed successfully for {tool_name}")
     except Exception as e:
         logger.error(f"[UI SINK] [X] Error in publish_ui_blocks: {e}", exc_info=True)
-
