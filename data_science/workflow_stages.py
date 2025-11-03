@@ -30,7 +30,9 @@ WORKFLOW_STAGES = [
             {"name": "remove_outliers_tool()", "description": "Outlier detection and removal"},
             {"name": "encode_categorical_tool()", "description": "Encode categorical variables"},
         ],
-        "tip": "Clean your data before analysis and modeling"
+        "tip": "Clean your data before analysis and modeling",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which cleaning tool to execute."
     },
     {
         "id": 3,
@@ -38,12 +40,14 @@ WORKFLOW_STAGES = [
         "icon": "🔍",
         "description": "Understand data distributions, patterns, and relationships",
         "tools": [
-            {"name": "plot_tool()", "description": "Generate automatic visualizations (8 chart types)"},
-            {"name": "stats_tool()", "description": "AI-powered statistical analysis"},
-            {"name": "correlation_analysis_tool()", "description": "Correlation matrix and relationship discovery"},
+            {"name": "plot_tool_guard()", "description": "Generate automatic visualizations (8 chart types)"},
+            {"name": "stats_tool_guard()", "description": "AI-powered statistical analysis"},
+            {"name": "correlation_analysis_tool_guard()", "description": "Correlation matrix and relationship discovery"},
             {"name": "describe_tool_guard()", "description": "Statistical summary of numerical features"},
         ],
-        "tip": "Explore your data to discover patterns and insights"
+        "tip": "Explore your data to discover patterns and insights",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which EDA tool to execute."
     },
     {
         "id": 4,
@@ -55,7 +59,9 @@ WORKFLOW_STAGES = [
             {"name": "correlation_plot_tool()", "description": "Correlation heatmap"},
             {"name": "plot_distribution_tool()", "description": "Distribution plots for all features"},
         ],
-        "tip": "Visualize patterns for better understanding and presentations"
+        "tip": "Visualize patterns for better understanding and presentations",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which visualization tool to execute."
     },
     {
         "id": 5,
@@ -68,7 +74,9 @@ WORKFLOW_STAGES = [
             {"name": "auto_feature_synthesis_tool()", "description": "AI-powered feature synthesis"},
             {"name": "apply_pca_tool()", "description": "Principal Component Analysis"},
         ],
-        "tip": "Engineer features to improve model performance"
+        "tip": "Engineer features to improve model performance",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which feature engineering tool to execute."
     },
     {
         "id": 6,
@@ -80,7 +88,9 @@ WORKFLOW_STAGES = [
             {"name": "correlation_analysis_tool()", "description": "Correlation and relationships"},
             {"name": "hypothesis_test_tool()", "description": "Statistical hypothesis testing"},
         ],
-        "tip": "Validate assumptions and test hypotheses scientifically"
+        "tip": "Validate assumptions and test hypotheses scientifically",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which statistical tool to execute."
     },
     {
         "id": 7,
@@ -95,7 +105,9 @@ WORKFLOW_STAGES = [
             {"name": "train_lightgbm_tool()", "description": "LightGBM model training"},
             {"name": "train_xgboost_tool()", "description": "XGBoost model training"},
         ],
-        "tip": "Start with AutoML for best automatic results"
+        "tip": "Start with AutoML for best automatic results",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which model training tool to execute."
     },
     {
         "id": 8,
@@ -109,7 +121,9 @@ WORKFLOW_STAGES = [
             {"name": "feature_importance_tool()", "description": "Feature importance analysis"},
             {"name": "cross_validate_tool()", "description": "K-fold cross-validation"},
         ],
-        "tip": "MANDATORY after training! Never skip evaluation"
+        "tip": "MANDATORY after training! Never skip evaluation",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which evaluation tool to execute."
     },
     {
         "id": 9,
@@ -121,7 +135,9 @@ WORKFLOW_STAGES = [
             {"name": "predict_proba_tool()", "description": "Prediction probabilities"},
             {"name": "batch_predict_tool()", "description": "Batch predictions on multiple files"},
         ],
-        "tip": "Use your trained model to make predictions"
+        "tip": "Use your trained model to make predictions",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which prediction tool to execute."
     },
     {
         "id": 10,
@@ -133,7 +149,9 @@ WORKFLOW_STAGES = [
             {"name": "save_model_tool()", "description": "Save model to disk"},
             {"name": "load_model_tool()", "description": "Load existing model"},
         ],
-        "tip": "Deploy your model for production use"
+        "tip": "Deploy your model for production use",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which deployment tool to execute."
     },
     {
         "id": 11,
@@ -144,7 +162,9 @@ WORKFLOW_STAGES = [
             {"name": "generate_insights_tool()", "description": "AI-powered insights generation"},
             {"name": "summary_report_tool()", "description": "Comprehensive analysis summary"},
         ],
-        "tip": "Document your findings and insights"
+        "tip": "Document your findings and insights",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which reporting tool to execute."
     },
     {
         "id": 12,
@@ -156,7 +176,9 @@ WORKFLOW_STAGES = [
             {"name": "clustering_tool()", "description": "Unsupervised clustering"},
             {"name": "anomaly_detection_tool()", "description": "Detect anomalies"},
         ],
-        "tip": "Apply specialized methods for specific domains"
+        "tip": "Apply specialized methods for specific domains",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which specialized tool to execute."
     },
     {
         "id": 13,
@@ -166,7 +188,9 @@ WORKFLOW_STAGES = [
         "tools": [
             {"name": "export_executive_report_tool()", "description": "AI-powered executive summary PDF"},
         ],
-        "tip": "Create a high-level summary for stakeholders"
+        "tip": "Create a high-level summary for stakeholders",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which report tool to execute."
     },
     {
         "id": 14,
@@ -176,7 +200,9 @@ WORKFLOW_STAGES = [
         "tools": [
             {"name": "export_reports_for_latest_run_pathsafe()", "description": "Comprehensive technical report PDF"},
         ],
-        "tip": "Export detailed technical documentation"
+        "tip": "Export detailed technical documentation",
+        "user_must_choose": True,
+        "wait_message": "⚠️ **USER MUST CHOOSE**: Do NOT auto-run any tools. Wait for user to select which export tool to execute."
     },
 ]
 
@@ -221,6 +247,12 @@ def format_stage_menu(stage: dict) -> str:
     # Tip
     if stage.get('tip'):
         lines.append(f"💡 **TIP:** {stage['tip']}")
+        lines.append("")
+    
+    # Wait message for stages that require user choice
+    if stage.get('wait_message'):
+        lines.append("")
+        lines.append(stage['wait_message'])
         lines.append("")
     
     # Progress footer

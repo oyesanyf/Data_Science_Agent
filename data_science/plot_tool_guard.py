@@ -306,57 +306,88 @@ async def plot_tool_guard(tool_context=None, **kwargs):
     result["artifacts"] = artifact_metadata  # Now includes {"filename": ..., "version": ...}
     result["artifact_count"] = len(artifact_metadata)
     
+    # CRITICAL: Ensure we ALWAYS have artifacts - if none found, create a diagnostic report
+    if not shown_names or not artifact_metadata:
+        logger.warning(f"[PLOT GUARD] ⚠️ No plot artifacts found, creating diagnostic report as fallback")
+        
+        # Create diagnostic markdown file in plots folder
+        ws_paths = state.get("workspace_paths", {})
+        plots_dir = ws_paths.get("plots") if ws_paths else None
+        
+        if plots_dir:
+            try:
+                import time
+                from datetime import datetime
+                
+                diagnostic_filename = f"plot_diagnostic_{int(time.time())}.md"
+                diagnostic_path = Path(plots_dir) / diagnostic_filename
+                
+                diagnostic_content = f"""# Plot Generation Diagnostic Report
+
+**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## Status
+The plot tool completed but did not generate PNG files.
+
+## Possible Reasons
+1. Dataset has insufficient data (needs at least 2 numeric columns)
+2. All columns are categorical (no numeric data to plot)
+3. Dataset is too small (< 2 rows)
+
+## Diagnostics
+- Files from result: {len(returned)}
+- Files discovered: {len(_discover_created_pngs(state))}
+- Created files: {len(created_files)}
+- Result status: {result.get('status', 'N/A')}
+- Dataset shape: {result.get('rows', 'N/A')} rows × {result.get('cols', 'N/A')} cols
+
+## Recommendation
+Check your dataset to ensure it has numeric columns for visualization.
+Use `stats_tool()` or `correlation_analysis_tool()` to explore numeric features.
+"""
+                
+                diagnostic_path.write_text(diagnostic_content, encoding='utf-8')
+                logger.info(f"[PLOT GUARD] Created diagnostic report: {diagnostic_path}")
+                
+                # Add diagnostic report to artifacts
+                artifact_metadata.append({
+                    "filename": f"plots/{diagnostic_filename}",
+                    "path": str(diagnostic_path),
+                    "source": "diagnostic",
+                    "exists": True
+                })
+                shown_names.append(diagnostic_filename)
+                created_files.append(str(diagnostic_path))
+                
+            except Exception as diag_err:
+                logger.error(f"[PLOT GUARD] Failed to create diagnostic report: {diag_err}")
+    
     # Build user-friendly message
-    if shown_names and (artifact_metadata or created_files):
+    if shown_names and artifact_metadata:
         message_parts = ["📊 **Plots Generated and Saved to Artifacts:**\n"]
         for i, name in enumerate(shown_names, 1):
             meta = artifact_metadata[i-1] if i-1 < len(artifact_metadata) else {}
             # Filesystem-only: show path if available, no version numbers
             path_info = f" - `{meta.get('path', name)}`" if meta.get('path') else ""
-            message_parts.append(f"{i}. **{name}**{path_info}")
-        message_parts.append(f"\n✅ **Total:** {len(shown_names)} plot{'s' if len(shown_names) > 1 else ''} saved")
-        message_parts.append("\n💡 **View:** Check the Artifacts panel (right side) to see your plots!")
+            is_diagnostic = meta.get('source') == 'diagnostic'
+            prefix = "📄" if is_diagnostic else "📊"
+            message_parts.append(f"{i}. {prefix} **{name}**{path_info}")
+        message_parts.append(f"\n✅ **Total:** {len(shown_names)} artifact{'s' if len(shown_names) > 1 else ''} saved")
+        message_parts.append("\n💡 **View:** Check the Artifacts panel (right side) to see your files!")
         formatted_message = "\n".join(message_parts)
+        
+        # If only diagnostic, set status to warning
+        if all(meta.get('source') == 'diagnostic' for meta in artifact_metadata):
+            result["status"] = "warning"
     else:
-        # CRITICAL: If no artifacts found, log detailed diagnostics
-        logger.error(f"[PLOT GUARD] ❌ NO ARTIFACTS FOUND!")
-        logger.error(f"[PLOT GUARD]   - Files from result: {len(returned)}")
-        logger.error(f"[PLOT GUARD]   - Files discovered: {len(_discover_created_pngs(state))}")
-        logger.error(f"[PLOT GUARD]   - Created files: {len(created_files)}")
-        logger.error(f"[PLOT GUARD]   - Result keys: {list(result.keys()) if isinstance(result, dict) else 'N/A'}")
-        if isinstance(result, dict):
-            logger.error(f"[PLOT GUARD]   - Result artifacts: {result.get('artifacts', 'N/A')}")
-            logger.error(f"[PLOT GUARD]   - Result plots: {result.get('plots', 'N/A')}")
-            logger.error(f"[PLOT GUARD]   - Result plot_paths: {result.get('plot_paths', 'N/A')}")
-            logger.error(f"[PLOT GUARD]   - Result status: {result.get('status', 'N/A')}")
-            logger.error(f"[PLOT GUARD]   - Result rows/cols: {result.get('rows', 'N/A')}/{result.get('cols', 'N/A')}")
-        
-        # Check workspace paths
-        ws_paths = state.get("workspace_paths", {})
-        plots_dir = ws_paths.get("plots") if ws_paths else None
-        logger.error(f"[PLOT GUARD]   - Workspace plots dir: {plots_dir}")
-        logger.error(f"[PLOT GUARD]   - Plots dir exists: {Path(plots_dir).exists() if plots_dir else False}")
-        if plots_dir and Path(plots_dir).exists():
-            png_files = list(Path(plots_dir).glob("*.png"))
-            logger.error(f"[PLOT GUARD]   - PNG files in plots dir: {len(png_files)}")
-            if png_files:
-                logger.error(f"[PLOT GUARD]   - Most recent PNG: {max(png_files, key=lambda x: x.stat().st_mtime)}")
-        
+        # This should never happen now because we create diagnostic report
+        logger.error(f"[PLOT GUARD] ❌ NO ARTIFACTS FOUND EVEN AFTER DIAGNOSTIC CREATION!")
         formatted_message = (
-            "⚠️ **Plot Generation Issue:**\n\n"
-            "The plot tool reported success but no artifacts were found or saved.\n\n"
-            "**Possible causes:**\n"
-            "1. Dataset has insufficient data (needs at least 2 numeric columns for plots)\n"
-            "2. Plots were generated but not saved to the workspace\n"
-            "3. Workspace directory not properly initialized\n"
-            "4. File paths not accessible\n\n"
-            "**Diagnostics:**\n"
-            f"- Artifacts in result: {len(returned)}\n"
-            f"- Files discovered: {len(_discover_created_pngs(state))}\n"
-            f"- Dataset shape: {result.get('rows', 'N/A')} rows × {result.get('cols', 'N/A')} cols\n\n"
-            "**Check logs for detailed diagnostics.**"
+            "⚠️ **Plot Generation Failed:**\n\n"
+            "Could not generate plots or diagnostic report.\n\n"
+            "**Check logs for details.**"
         )
-        result["status"] = "warning"  # Not complete failure, but incomplete
+        result["status"] = "failed"
     
     # [OK] CRITICAL: Add __display__ field for LLM to extract and show in chat
     result["__display__"] = formatted_message  # HIGHEST PRIORITY display field

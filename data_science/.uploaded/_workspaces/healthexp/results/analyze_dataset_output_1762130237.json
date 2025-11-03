@@ -1,0 +1,178 @@
+{
+  "tool_name": "analyze_dataset_tool",
+  "timestamp": "2025-11-02T18:37:17.429980",
+  "status": "success",
+  "display": " **Dataset Analysis Complete!**\n\n **Dataset Analysis Complete**\n\n**Shape:** 274 rows  4 columns\n**Columns:** 4\n\n**Numeric Features:** 5\n**Categorical Features:** 1\n\n**Datatype Breakdown:** Numeric: 3, Categorical: 1\n\n**Column Data Types (sample):**\n   Year: int64 (numeric, non-null=274, unique=51)\n   Country: object (categorical, non-null=274, unique=6)\n   Spending_USD: float64 (numeric, non-null=274, unique=274)\n   Life_Expectancy: float64 (numeric, non-null=274, unique=118)\n\n**Artifacts Generated:** 5 files\n Check the Artifacts panel for visualizations:\n   reports/profile.json\n   plots/pairplot.png\n   plots/correlation_heatmap.png\n   pca_scree.png\n   kmeans_pca2d.png\n\n **Data Preview (First Rows)**\n\n```text\n|   Year | Country       |   Spending_USD |   Life_Expectancy |\n|-------:|:--------------|---------------:|------------------:|\n|   1970 | Germany       |        252.311 |              70.6 |\n|   1970 | France        |        192.143 |              72.2 |\n|   1970 | Great Britain |        123.993 |              71.9 |\n|   1970 | Japan         |        150.437 |              72   |\n|   1970 | USA           |        326.961 |              70.9 |\n```\n\n**Shape:** 274 rows  4 columns\n\n**Columns:** Year, Country, Spending_USD, Life_Expectancy\n\n **Data Summary & Statistics**\n\n```json\n{\n  \"Year\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 1996.992700729927,\n    \"std\": 14.180932537192154,\n    \"min\": 1970.0,\n    \"25%\": 1985.25,\n    \"50%\": 1998.0,\n    \"75%\": 2009.0,\n    \"max\": 2020.0\n  },\n  \"Country\": {\n    \"count\": 274,\n    \"unique\": 6,\n    \"top\": \"USA\",\n    \"freq\": 51,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  },\n  \"Spending_USD\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 2789.338905109489,\n    \"std\": 2194.9397848395724,\n    \"min\": 123.993,\n    \"25%\": 1038.357,\n    \"50%\": 2295.578,\n    \"75%\": 4055.61,\n    \"max\": 11859.179\n  },\n  \"Life_Expectancy\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 77.90948905109488,\n    \"std\": 3.276263466523638,\n    \"min\": 70.6,\n    \"25%\": 75.525,\n    \"50%\": 78.1,\n    \"75%\": 80.57499999999999,\n    \"max\": 84.7\n  }\n}\n```\n\n**Dataset Shape:** 274 rows  4 columns\n\n**Total Columns:** 4\n\n**Numeric Features:** 3\n\n**Categorical Features:** 1\n\n **Ready for next steps** - See recommended options above!\n\n\ud83d\udcc4 **Note:** Full analysis results have been saved to:\n- `reports/analysis_output.md` (formatted results)\n- `reports/analyze_dataset_combined.md` (detailed analysis)\n- `reports/full_analysis.json` (complete data)\n\n\n\n============================================================\n\n\ud83d\udea8\ud83d\udea8\ud83d\udea8 **MANDATORY - LLM MUST DISPLAY THIS MENU:**\n\n## \ud83d\udccb **SEQUENTIAL WORKFLOW MENU - NEXT STEPS**\n\n**THIS MENU IS EMBEDDED IN THE __display__ FIELD - YOU MUST EXTRACT AND SHOW IT TO THE USER!**\n\nThe menu below shows all available tools organized by workflow stages. Users need to see ALL options to choose their next action.\n\nStep 1 = File Discovery (list_data_files), Step 2 = EDA (analyze_dataset). Full tool menu:\n\nRecommended Next Actions:\n1. list_data_files()\n2. analyze_dataset()\n2. describe()\n3. plot(kind='correlation')\n\n\ud83d\udca1 **TIP:** Choose a tool from the numbered options above to proceed with the next stage of your data science workflow.\n\n\ud83d\udea8 **REMINDER TO LLM:** This menu is part of the tool's output - NEVER skip displaying it!\n",
+  "data": {
+    "shape": {
+      "rows": 274,
+      "cols": 4
+    },
+    "columns": 4,
+    "numeric_features": 5,
+    "categorical_features": 1,
+    "head_preview": {
+      "status": "success",
+      "head": [
+        {
+          "Year": 1970,
+          "Country": "Germany",
+          "Spending_USD": 252.311,
+          "Life_Expectancy": 70.6
+        },
+        {
+          "Year": 1970,
+          "Country": "France",
+          "Spending_USD": 192.143,
+          "Life_Expectancy": 72.2
+        },
+        {
+          "Year": 1970,
+          "Country": "Great Britain",
+          "Spending_USD": 123.993,
+          "Life_Expectancy": 71.9
+        },
+        {
+          "Year": 1970,
+          "Country": "Japan",
+          "Spending_USD": 150.437,
+          "Life_Expectancy": 72.0
+        },
+        {
+          "Year": 1970,
+          "Country": "USA",
+          "Spending_USD": 326.961,
+          "Life_Expectancy": 70.9
+        }
+      ],
+      "shape": [
+        274,
+        4
+      ],
+      "columns": [
+        "Year",
+        "Country",
+        "Spending_USD",
+        "Life_Expectancy"
+      ],
+      "dtypes": {
+        "Year": "int64",
+        "Country": "object",
+        "Spending_USD": "float64",
+        "Life_Expectancy": "float64"
+      },
+      "message": " **Data Preview (First Rows)**\n\n```text\n|   Year | Country       |   Spending_USD |   Life_Expectancy |\n|-------:|:--------------|---------------:|------------------:|\n|   1970 | Germany       |        252.311 |              70.6 |\n|   1970 | France        |        192.143 |              72.2 |\n|   1970 | Great Britain |        123.993 |              71.9 |\n|   1970 | Japan         |        150.437 |              72   |\n|   1970 | USA           |        326.961 |              70.9 |\n```\n\n**Shape:** 274 rows \u00d7 4 columns\n\n**Columns:** Year, Country, Spending_USD, Life_Expectancy",
+      "__display__": " **Data Preview (First Rows)**\n\n```text\n|   Year | Country       |   Spending_USD |   Life_Expectancy |\n|-------:|:--------------|---------------:|------------------:|\n|   1970 | Germany       |        252.311 |              70.6 |\n|   1970 | France        |        192.143 |              72.2 |\n|   1970 | Great Britain |        123.993 |              71.9 |\n|   1970 | Japan         |        150.437 |              72   |\n|   1970 | USA           |        326.961 |              70.9 |\n```\n\n**Shape:** 274 rows \u00d7 4 columns\n\n**Columns:** Year, Country, Spending_USD, Life_Expectancy",
+      "text": " **Data Preview (First Rows)**\n\n```text\n|   Year | Country       |   Spending_USD |   Life_Expectancy |\n|-------:|:--------------|---------------:|------------------:|\n|   1970 | Germany       |        252.311 |              70.6 |\n|   1970 | France        |        192.143 |              72.2 |\n|   1970 | Great Britain |        123.993 |              71.9 |\n|   1970 | Japan         |        150.437 |              72   |\n|   1970 | USA           |        326.961 |              70.9 |\n```\n\n**Shape:** 274 rows \u00d7 4 columns\n\n**Columns:** Year, Country, Spending_USD, Life_Expectancy",
+      "ui_text": " **Data Preview (First Rows)**\n\n```text\n|   Year | Country       |   Spending_USD |   Life_Expectancy |\n|-------:|:--------------|---------------:|------------------:|\n|   1970 | Germany       |        252.311 |              70.6 |\n|   1970 | France        |        192.143 |              72.2 |\n|   1970 | Great Britain |        123.993 |              71.9 |\n|   1970 | Japan         |        150.437 |              72   |\n|   1970 | USA           |        326.961 |              70.9 |\n```\n\n**Shape:** 274 rows \u00d7 4 columns\n\n**Columns:** Year, Country, Spending_USD, Life_Expectancy",
+      "content": " **Data Preview (First Rows)**\n\n```text\n|   Year | Country       |   Spending_USD |   Life_Expectancy |\n|-------:|:--------------|---------------:|------------------:|\n|   1970 | Germany       |        252.311 |              70.6 |\n|   1970 | France        |        192.143 |              72.2 |\n|   1970 | Great Britain |        123.993 |              71.9 |\n|   1970 | Japan         |        150.437 |              72   |\n|   1970 | USA           |        326.961 |              70.9 |\n```\n\n**Shape:** 274 rows \u00d7 4 columns\n\n**Columns:** Year, Country, Spending_USD, Life_Expectancy",
+      "display": " **Data Preview (First Rows)**\n\n```text\n|   Year | Country       |   Spending_USD |   Life_Expectancy |\n|-------:|:--------------|---------------:|------------------:|\n|   1970 | Germany       |        252.311 |              70.6 |\n|   1970 | France        |        192.143 |              72.2 |\n|   1970 | Great Britain |        123.993 |              71.9 |\n|   1970 | Japan         |        150.437 |              72   |\n|   1970 | USA           |        326.961 |              70.9 |\n```\n\n**Shape:** 274 rows \u00d7 4 columns\n\n**Columns:** Year, Country, Spending_USD, Life_Expectancy",
+      "_formatted_output": " **Data Preview (First Rows)**\n\n```text\n|   Year | Country       |   Spending_USD |   Life_Expectancy |\n|-------:|:--------------|---------------:|------------------:|\n|   1970 | Germany       |        252.311 |              70.6 |\n|   1970 | France        |        192.143 |              72.2 |\n|   1970 | Great Britain |        123.993 |              71.9 |\n|   1970 | Japan         |        150.437 |              72   |\n|   1970 | USA           |        326.961 |              70.9 |\n```\n\n**Shape:** 274 rows \u00d7 4 columns\n\n**Columns:** Year, Country, Spending_USD, Life_Expectancy",
+      "artifacts": [
+        "D:\\harfile\\Data_Science_Agent\\data_science\\.uploaded\\_workspaces\\healthexp\\20251102_183621\\reports\\head_output.md"
+      ]
+    },
+    "describe_summary": {
+      "status": "success",
+      "overview": {
+        "Year": {
+          "count": 274.0,
+          "unique": null,
+          "top": null,
+          "freq": null,
+          "mean": 1996.992700729927,
+          "std": 14.180932537192154,
+          "min": 1970.0,
+          "25%": 1985.25,
+          "50%": 1998.0,
+          "75%": 2009.0,
+          "max": 2020.0
+        },
+        "Country": {
+          "count": 274,
+          "unique": 6,
+          "top": "USA",
+          "freq": 51,
+          "mean": null,
+          "std": null,
+          "min": null,
+          "25%": null,
+          "50%": null,
+          "75%": null,
+          "max": null
+        },
+        "Spending_USD": {
+          "count": 274.0,
+          "unique": null,
+          "top": null,
+          "freq": null,
+          "mean": 2789.338905109489,
+          "std": 2194.9397848395724,
+          "min": 123.993,
+          "25%": 1038.357,
+          "50%": 2295.578,
+          "75%": 4055.61,
+          "max": 11859.179
+        },
+        "Life_Expectancy": {
+          "count": 274.0,
+          "unique": null,
+          "top": null,
+          "freq": null,
+          "mean": 77.90948905109488,
+          "std": 3.276263466523638,
+          "min": 70.6,
+          "25%": 75.525,
+          "50%": 78.1,
+          "75%": 80.57499999999999,
+          "max": 84.7
+        }
+      },
+      "shape": [
+        274,
+        4
+      ],
+      "columns": [
+        "Year",
+        "Country",
+        "Spending_USD",
+        "Life_Expectancy"
+      ],
+      "dtypes": {
+        "Year": "int64",
+        "Country": "object",
+        "Spending_USD": "float64",
+        "Life_Expectancy": "float64"
+      },
+      "numeric_features": [
+        "Year",
+        "Spending_USD",
+        "Life_Expectancy"
+      ],
+      "categorical_features": [
+        "Country"
+      ],
+      "missing_values": {},
+      "total_missing": 0,
+      "message": " **Data Summary & Statistics**\n\n```json\n{\n  \"Year\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 1996.992700729927,\n    \"std\": 14.180932537192154,\n    \"min\": 1970.0,\n    \"25%\": 1985.25,\n    \"50%\": 1998.0,\n    \"75%\": 2009.0,\n    \"max\": 2020.0\n  },\n  \"Country\": {\n    \"count\": 274,\n    \"unique\": 6,\n    \"top\": \"USA\",\n    \"freq\": 51,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  },\n  \"Spending_USD\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 2789.338905109489,\n    \"std\": 2194.9397848395724,\n    \"min\": 123.993,\n    \"25%\": 1038.357,\n    \"50%\": 2295.578,\n    \"75%\": 4055.61,\n    \"max\": 11859.179\n  },\n  \"Life_Expectancy\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 77.90948905109488,\n    \"std\": 3.276263466523638,\n    \"min\": 70.6,\n    \"25%\": 75.525,\n    \"50%\": 78.1,\n    \"75%\": 80.57499999999999,\n    \"max\": 84.7\n  }\n}\n```\n\n**Dataset Shape:** 274 rows  4 columns\n\n**Total Columns:** 4\n\n**Numeric Features:** 3\n\n**Categorical Features:** 1",
+      "__display__": " **Data Summary & Statistics**\n\n```json\n{\n  \"Year\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 1996.992700729927,\n    \"std\": 14.180932537192154,\n    \"min\": 1970.0,\n    \"25%\": 1985.25,\n    \"50%\": 1998.0,\n    \"75%\": 2009.0,\n    \"max\": 2020.0\n  },\n  \"Country\": {\n    \"count\": 274,\n    \"unique\": 6,\n    \"top\": \"USA\",\n    \"freq\": 51,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  },\n  \"Spending_USD\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 2789.338905109489,\n    \"std\": 2194.9397848395724,\n    \"min\": 123.993,\n    \"25%\": 1038.357,\n    \"50%\": 2295.578,\n    \"75%\": 4055.61,\n    \"max\": 11859.179\n  },\n  \"Life_Expectancy\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 77.90948905109488,\n    \"std\": 3.276263466523638,\n    \"min\": 70.6,\n    \"25%\": 75.525,\n    \"50%\": 78.1,\n    \"75%\": 80.57499999999999,\n    \"max\": 84.7\n  }\n}\n```\n\n**Dataset Shape:** 274 rows  4 columns\n\n**Total Columns:** 4\n\n**Numeric Features:** 3\n\n**Categorical Features:** 1",
+      "text": " **Data Summary & Statistics**\n\n```json\n{\n  \"Year\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 1996.992700729927,\n    \"std\": 14.180932537192154,\n    \"min\": 1970.0,\n    \"25%\": 1985.25,\n    \"50%\": 1998.0,\n    \"75%\": 2009.0,\n    \"max\": 2020.0\n  },\n  \"Country\": {\n    \"count\": 274,\n    \"unique\": 6,\n    \"top\": \"USA\",\n    \"freq\": 51,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  },\n  \"Spending_USD\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 2789.338905109489,\n    \"std\": 2194.9397848395724,\n    \"min\": 123.993,\n    \"25%\": 1038.357,\n    \"50%\": 2295.578,\n    \"75%\": 4055.61,\n    \"max\": 11859.179\n  },\n  \"Life_Expectancy\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 77.90948905109488,\n    \"std\": 3.276263466523638,\n    \"min\": 70.6,\n    \"25%\": 75.525,\n    \"50%\": 78.1,\n    \"75%\": 80.57499999999999,\n    \"max\": 84.7\n  }\n}\n```\n\n**Dataset Shape:** 274 rows  4 columns\n\n**Total Columns:** 4\n\n**Numeric Features:** 3\n\n**Categorical Features:** 1",
+      "ui_text": " **Data Summary & Statistics**\n\n```json\n{\n  \"Year\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 1996.992700729927,\n    \"std\": 14.180932537192154,\n    \"min\": 1970.0,\n    \"25%\": 1985.25,\n    \"50%\": 1998.0,\n    \"75%\": 2009.0,\n    \"max\": 2020.0\n  },\n  \"Country\": {\n    \"count\": 274,\n    \"unique\": 6,\n    \"top\": \"USA\",\n    \"freq\": 51,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  },\n  \"Spending_USD\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 2789.338905109489,\n    \"std\": 2194.9397848395724,\n    \"min\": 123.993,\n    \"25%\": 1038.357,\n    \"50%\": 2295.578,\n    \"75%\": 4055.61,\n    \"max\": 11859.179\n  },\n  \"Life_Expectancy\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 77.90948905109488,\n    \"std\": 3.276263466523638,\n    \"min\": 70.6,\n    \"25%\": 75.525,\n    \"50%\": 78.1,\n    \"75%\": 80.57499999999999,\n    \"max\": 84.7\n  }\n}\n```\n\n**Dataset Shape:** 274 rows  4 columns\n\n**Total Columns:** 4\n\n**Numeric Features:** 3\n\n**Categorical Features:** 1",
+      "content": " **Data Summary & Statistics**\n\n```json\n{\n  \"Year\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 1996.992700729927,\n    \"std\": 14.180932537192154,\n    \"min\": 1970.0,\n    \"25%\": 1985.25,\n    \"50%\": 1998.0,\n    \"75%\": 2009.0,\n    \"max\": 2020.0\n  },\n  \"Country\": {\n    \"count\": 274,\n    \"unique\": 6,\n    \"top\": \"USA\",\n    \"freq\": 51,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  },\n  \"Spending_USD\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 2789.338905109489,\n    \"std\": 2194.9397848395724,\n    \"min\": 123.993,\n    \"25%\": 1038.357,\n    \"50%\": 2295.578,\n    \"75%\": 4055.61,\n    \"max\": 11859.179\n  },\n  \"Life_Expectancy\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 77.90948905109488,\n    \"std\": 3.276263466523638,\n    \"min\": 70.6,\n    \"25%\": 75.525,\n    \"50%\": 78.1,\n    \"75%\": 80.57499999999999,\n    \"max\": 84.7\n  }\n}\n```\n\n**Dataset Shape:** 274 rows  4 columns\n\n**Total Columns:** 4\n\n**Numeric Features:** 3\n\n**Categorical Features:** 1",
+      "display": " **Data Summary & Statistics**\n\n```json\n{\n  \"Year\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 1996.992700729927,\n    \"std\": 14.180932537192154,\n    \"min\": 1970.0,\n    \"25%\": 1985.25,\n    \"50%\": 1998.0,\n    \"75%\": 2009.0,\n    \"max\": 2020.0\n  },\n  \"Country\": {\n    \"count\": 274,\n    \"unique\": 6,\n    \"top\": \"USA\",\n    \"freq\": 51,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  },\n  \"Spending_USD\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 2789.338905109489,\n    \"std\": 2194.9397848395724,\n    \"min\": 123.993,\n    \"25%\": 1038.357,\n    \"50%\": 2295.578,\n    \"75%\": 4055.61,\n    \"max\": 11859.179\n  },\n  \"Life_Expectancy\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 77.90948905109488,\n    \"std\": 3.276263466523638,\n    \"min\": 70.6,\n    \"25%\": 75.525,\n    \"50%\": 78.1,\n    \"75%\": 80.57499999999999,\n    \"max\": 84.7\n  }\n}\n```\n\n**Dataset Shape:** 274 rows  4 columns\n\n**Total Columns:** 4\n\n**Numeric Features:** 3\n\n**Categorical Features:** 1",
+      "_formatted_output": " **Data Summary & Statistics**\n\n```json\n{\n  \"Year\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 1996.992700729927,\n    \"std\": 14.180932537192154,\n    \"min\": 1970.0,\n    \"25%\": 1985.25,\n    \"50%\": 1998.0,\n    \"75%\": 2009.0,\n    \"max\": 2020.0\n  },\n  \"Country\": {\n    \"count\": 274,\n    \"unique\": 6,\n    \"top\": \"USA\",\n    \"freq\": 51,\n    \"mean\": null,\n    \"std\": null,\n    \"min\": null,\n    \"25%\": null,\n    \"50%\": null,\n    \"75%\": null,\n    \"max\": null\n  },\n  \"Spending_USD\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 2789.338905109489,\n    \"std\": 2194.9397848395724,\n    \"min\": 123.993,\n    \"25%\": 1038.357,\n    \"50%\": 2295.578,\n    \"75%\": 4055.61,\n    \"max\": 11859.179\n  },\n  \"Life_Expectancy\": {\n    \"count\": 274.0,\n    \"unique\": null,\n    \"top\": null,\n    \"freq\": null,\n    \"mean\": 77.90948905109488,\n    \"std\": 3.276263466523638,\n    \"min\": 70.6,\n    \"25%\": 75.525,\n    \"50%\": 78.1,\n    \"75%\": 80.57499999999999,\n    \"max\": 84.7\n  }\n}\n```\n\n**Dataset Shape:** 274 rows  4 columns\n\n**Total Columns:** 4\n\n**Numeric Features:** 3\n\n**Categorical Features:** 1",
+      "artifacts": [
+        "D:\\harfile\\Data_Science_Agent\\data_science\\.uploaded\\_workspaces\\healthexp\\20251102_183621\\reports\\describe_output.md"
+      ]
+    }
+  },
+  "artifacts": [
+    "reports/profile.json",
+    "plots/pairplot.png",
+    "plots/correlation_heatmap.png",
+    "pca_scree.png",
+    "kmeans_pca2d.png",
+    "reports/analysis_output.md"
+  ],
+  "metrics": {}
+}

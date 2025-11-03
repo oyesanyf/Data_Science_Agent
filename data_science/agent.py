@@ -582,6 +582,7 @@ from .callbacks import after_tool_callback
 from .plot_tool_guard import plot_tool_guard
 from .executive_report_guard import export_executive_report_tool_guard
 from .head_describe_guard import head_tool_guard, describe_tool_guard
+from .eda_tool_guards import stats_tool_guard, correlation_analysis_tool_guard
 from .workflow_guards import (
     train_baseline_model_tool_guard,
     train_tool_guard,
@@ -7249,9 +7250,9 @@ root_agent = LlmAgent(
         SafeFunctionTool(describe_tool_guard),
         SafeFunctionTool(shape_tool),  #  Quick dataset dimensions
         SafeFunctionTool(plot_tool_guard),
-        SafeFunctionTool(stats_tool),
+        SafeFunctionTool(stats_tool_guard),
         SafeFunctionTool(robust_auto_clean_file_tool),
-        SafeFunctionTool(correlation_analysis_tool),  # Correlation matrix and relationships
+        SafeFunctionTool(correlation_analysis_tool_guard),  # Correlation matrix and relationships
         # Executive report guard
         SafeFunctionTool(export_executive_report_tool_guard),
         # Path-safe report workflow

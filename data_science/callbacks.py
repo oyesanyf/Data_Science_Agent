@@ -535,6 +535,12 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
             # Nothing to do if no context is provided
             return None
         
+        # CRITICAL: Initialize state-based tracking to prevent duplicate status messages across multiple callback invocations
+        if not hasattr(callback_context, 'state') or callback_context.state is None:
+            callback_context.state = {}
+        if '_status_added' not in callback_context.state:
+            callback_context.state['_status_added'] = set()
+        
         # [OK] DEBUG: Log what we receive
         logger.info(f"[CALLBACK] Tool: {tool_name}")
         logger.info(f"[CALLBACK] Result type: {type(result)}")
@@ -749,17 +755,27 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
                     )
                     
                     if isinstance(result, dict):
-                        result["__display__"] = result.get("__display__", "") + status_summary
-                        result["message"] = result["__display__"]
+                        # CRITICAL: Use state-based tracking to prevent duplicates across callback invocations
+                        status_key = f"{tool_name}_{tool_stage}_error"
+                        if status_key not in callback_context.state['_status_added']:
+                            callback_context.state['_status_added'].add(status_key)
+                            existing_display = result.get("__display__", "")
+                            result["__display__"] = existing_display + status_summary
+                            result["message"] = result["__display__"]
+                            logger.debug(f"[WORKFLOW] Added error status for {status_key}")
+                        else:
+                            logger.debug(f"[WORKFLOW] Error status already added for {status_key}, skipping duplicate")
                 
-                elif result.get("status") == "success":
-                    # SUCCESS CASE: Add status summary and advance to next stage
+                elif result.get("status") == "success" or result.get("status") == "warning":
+                    # SUCCESS/WARNING CASE: Add status summary and advance to next stage
+                    status_icon = "✅" if result.get("status") == "success" else "⚠️"
+                    status_word = "COMPLETED" if result.get("status") == "success" else "COMPLETED (WITH WARNINGS)"
                     status_summary = (
                         "\n\n" + "-" * 60 + "\n"
-                        f"## 📊 **STAGE {tool_stage} STATUS: ✅ COMPLETED**\n\n"
+                        f"## 📊 **STAGE {tool_stage} STATUS: {status_icon} {status_word}**\n\n"
                         f"**Stage:** {stage_icon} {stage_name}\n"
                         f"**Tool:** `{tool_name}`\n"
-                        f"**Result:** ✅ Successfully completed\n"
+                        f"**Result:** {status_icon} Successfully completed\n"
                         f"**Progress:** {tool_stage} of 14 stages completed\n"
                         "-" * 60 + "\n"
                     )
@@ -774,22 +790,35 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
                         
                         # Append status summary and next menu to result display
                         if isinstance(result, dict):
-                            existing_display = result.get("__display__", "") or result.get("message", "") or ""
-                            # Add status summary, then next stage menu
-                            result["__display__"] = existing_display + status_summary + "\n\n" + "=" * 60 + "\n\n" + stage_menu
-                            result["message"] = result["__display__"]  # Keep in sync
-                            
-                            # Update workflow stage in state
-                            callback_context.state["workflow_stage"] = next_stage_id
-                            logger.info(f"[WORKFLOW] ✅ Stage {tool_stage} ({stage_name}) COMPLETED → Advanced to Stage {next_stage_id}: {next_stage['name']}")
+                            # CRITICAL: Use state-based tracking to prevent duplicates across callback invocations
+                            status_key = f"{tool_name}_{tool_stage}_success_advance"
+                            if status_key not in callback_context.state['_status_added']:
+                                callback_context.state['_status_added'].add(status_key)
+                                existing_display = result.get("__display__", "") or result.get("message", "") or ""
+                                # Add status summary, then next stage menu
+                                result["__display__"] = existing_display + status_summary + "\n\n" + "=" * 60 + "\n\n" + stage_menu
+                                result["message"] = result["__display__"]  # Keep in sync
+                                
+                                # Update workflow stage in state
+                                callback_context.state["workflow_stage"] = next_stage_id
+                                logger.info(f"[WORKFLOW] ✅ Stage {tool_stage} ({stage_name}) COMPLETED → Advanced to Stage {next_stage_id}: {next_stage['name']}")
+                            else:
+                                logger.debug(f"[WORKFLOW] Status already added for {status_key}, skipping duplicate")
                         else:
                             logger.debug(f"[WORKFLOW] Result is not dict, cannot append menu")
                     else:
                         # Still add status summary even if not advancing
                         if isinstance(result, dict):
-                            existing_display = result.get("__display__", "") or result.get("message", "") or ""
-                            result["__display__"] = existing_display + status_summary
-                            result["message"] = result["__display__"]
+                            # CRITICAL: Use state-based tracking to prevent duplicates
+                            status_key = f"{tool_name}_{tool_stage}_success_no_advance"
+                            if status_key not in callback_context.state['_status_added']:
+                                callback_context.state['_status_added'].add(status_key)
+                                existing_display = result.get("__display__", "") or result.get("message", "") or ""
+                                result["__display__"] = existing_display + status_summary
+                                result["message"] = result["__display__"]
+                                logger.debug(f"[WORKFLOW] Added status for {status_key}")
+                            else:
+                                logger.debug(f"[WORKFLOW] Status already added for {status_key}, skipping duplicate")
                         logger.debug(f"[WORKFLOW] Stage {next_stage_id} already shown or complete")
                 else:
                     # Unknown status - add neutral status summary
@@ -803,9 +832,16 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
                     )
                     
                     if isinstance(result, dict):
-                        existing_display = result.get("__display__", "") or result.get("message", "") or ""
-                        result["__display__"] = existing_display + status_summary
-                        result["message"] = result["__display__"]
+                        # CRITICAL: Use state-based tracking to prevent duplicates
+                        status_key = f"{tool_name}_{tool_stage}_unknown"
+                        if status_key not in callback_context.state['_status_added']:
+                            callback_context.state['_status_added'].add(status_key)
+                            existing_display = result.get("__display__", "") or result.get("message", "") or ""
+                            result["__display__"] = existing_display + status_summary
+                            result["message"] = result["__display__"]
+                            logger.debug(f"[WORKFLOW] Added unknown status for {status_key}")
+                        else:
+                            logger.debug(f"[WORKFLOW] Unknown status already added for {status_key}, skipping duplicate")
                     logger.debug(f"[WORKFLOW] Tool {tool_name} status is '{result.get('status')}' (not success/error)")
             else:
                 logger.debug(f"[WORKFLOW] Tool {tool_name} not recognized for stage advancement (stage={tool_stage})")
@@ -841,10 +877,14 @@ async def after_tool_callback(*, tool=None, tool_context=None, result=None, **kw
         
         # Block "success text" without artifacts for plot tools
         if result and isinstance(result, dict):
-            has_artifacts = bool(result.get("artifacts")) or bool(result.get("plots"))
+            # CRITICAL: Check if artifacts list has items, not just if list exists
+            artifacts_list = result.get("artifacts") or []
+            plots_list = result.get("plots") or []
+            has_artifacts = (isinstance(artifacts_list, list) and len(artifacts_list) > 0) or (isinstance(plots_list, list) and len(plots_list) > 0)
             if (result.get("status") == "success") and not has_artifacts and tool_name.lower().startswith("plot"):
                 result["status"] = "failed"
                 result["message"] = "Plot tool reported success but produced no artifacts."
+                logger.warning(f"[CALLBACK] Plot tool returned success but no artifacts found (artifacts={len(artifacts_list) if isinstance(artifacts_list, list) else 'invalid'}, plots={len(plots_list) if isinstance(plots_list, list) else 'invalid'})")
         
         # [OK] Promote tool result text to the chat stream as an assistant message
         try:
